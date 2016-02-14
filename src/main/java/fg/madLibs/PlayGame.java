@@ -7,18 +7,14 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream; //import the sun.audio package
+//import the sun.audio package
 
 public class PlayGame extends JFrame {
 
@@ -59,13 +55,6 @@ public class PlayGame extends JFrame {
 		topPanel.add(label);
 		container.add(topPanel, BorderLayout.NORTH);
 		container.add(buttonPanel, BorderLayout.SOUTH);
-
-		String musicFile = "Ring05.wav";
-		InputStream in = new FileInputStream(musicFile);
-
-		AudioStream audioStream = new AudioStream(in);
-
-		AudioPlayer.player.start(audioStream);
 
 		button.addActionListener(new ActionListener() {
 
