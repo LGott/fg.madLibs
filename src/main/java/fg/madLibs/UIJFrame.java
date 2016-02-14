@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -48,7 +50,6 @@ public class UIJFrame extends JFrame {
 
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
-		// container.setBackground(Color.BLACK);
 
 		JPanel north = new JPanel();
 		north.setBackground(Color.decode("#8C489F"));
@@ -90,7 +91,6 @@ public class UIJFrame extends JFrame {
 		north.add(label);
 
 		this.fileName = filename;
-		// this.text = new JTextField();
 		this.submit = new JButton("Submit");
 		submit.setBackground(Color.decode("#177F75"));
 		submit.setForeground(Color.decode("#CBFFFA"));
@@ -100,18 +100,11 @@ public class UIJFrame extends JFrame {
 		this.textFile = new ArrayList<String>();
 		randomWords = new ArrayList<String>();
 		this.index = new ArrayList<Integer>();
-		this.randomButton = new JButton("Randomize My Mad Lib!!");
+		randomButton = new JButton("Randomize My MadLib!!");
 		add(randomButton, BorderLayout.EAST);
+
 		add(submit, BorderLayout.SOUTH);
 
-		/*
-		 * Scanner file = new Scanner(new File(filename));
-		 * 
-		 * file.useDelimiter(Pattern.compile("%")); while (file.hasNext()) {
-		 * String line = file.next(); this.partsOfSpeech = line.split(",");
-		 * 
-		 * }
-		 */
 		readFile(fileName);
 
 		int p = GroupLayout.PREFERRED_SIZE;
@@ -121,11 +114,22 @@ public class UIJFrame extends JFrame {
 			label.setForeground(Color.decode("#EC799A"));
 			label.setFont(font);
 			labels.add(label);
-			JTextField field = new JTextField("");
+			final JTextField field = new JTextField("");
 			field.setBackground(Color.decode("#EC799A"));
 			field.setForeground(Color.decode("#9F0251"));
 			field.setFont(font);
 			field.setPreferredSize(new Dimension(150, 25));
+			field.addFocusListener(new FocusListener() {
+
+				public void focusGained(FocusEvent arg0) {
+					words.add(field.getText());
+				}
+
+				public void focusLost(FocusEvent arg0) {
+
+				}
+
+			});
 			texts.add(field);
 		}
 
@@ -152,24 +156,23 @@ public class UIJFrame extends JFrame {
 
 					words.add(texts.get(i).getText());
 
-					// threadCall();
-
 				}
 				filterArray();
-				new DisplayFrame(textFile, words, image).setVisible(true);
+				threadCall();
 
-				displayText();
+				// displayText();
 			}
 		});
 
 		randomButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 
+				// System.out.println("Hello");
 				randomThreadCall();
+				// System.out.println("How");
 				displayRandom();
-
+				// System.out.println("are");
 			}
 		});
 	}
@@ -210,8 +213,10 @@ public class UIJFrame extends JFrame {
 		for (int i = 0; i < filtered.size(); i++) {
 			thread = new MadLibThread(filteredWords.get(i), filtered.get(i), this);
 			thread.start();
-
 		}
+
+		new DisplayFrame(textFile, words, image).setVisible(true);
+		dispose();
 	}
 
 	public void randomThreadCall() {
@@ -238,7 +243,9 @@ public class UIJFrame extends JFrame {
 					filtered.add(partsOfSpeech[i]);
 					filteredWords.add(words.get(i));
 					index.add(i);
+
 				}
+
 			}
 		}
 		System.out.println(filtered.toString());
@@ -247,15 +254,14 @@ public class UIJFrame extends JFrame {
 	}
 
 	public void displayRandom() {
-
 		for (int i = 0; i < index.size(); i++) {
-
 			texts.set(index.get(i), new JTextField(randomWords.get(i)));
 
 		}
 	}
 
 	public static void main(String[] args) throws IOException {
-		new UIJFrame("Mad Lib Advice From Dad.txt", "AdviceFromDadImage.jpeg").setVisible(true);
+		new UIJFrame("How To Wash Your Face.txt", "AdviceFromDadImage.jpeg").setVisible(true);
 	}
+
 }
