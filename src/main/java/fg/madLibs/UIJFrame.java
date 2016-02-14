@@ -48,6 +48,7 @@ public class UIJFrame extends JFrame {
 	public UIJFrame(String filename, String imageURL) throws IOException {
 
 		//HELLO!
+		//How are you!
 		setTitle("MadLibs");
 		setSize(700, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
