@@ -122,7 +122,7 @@ public class UIJFrame extends JFrame {
 			field.addFocusListener(new FocusListener() {
 
 				public void focusGained(FocusEvent arg0) {
-					words.add(field.getText());
+					// words.add(field.getText());
 				}
 
 				public void focusLost(FocusEvent arg0) {
@@ -169,7 +169,19 @@ public class UIJFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				// System.out.println("Hello");
-				randomThreadCall();
+				filterArray();
+				try {
+					randomThreadCall();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				// System.out.println("How");
 				displayRandom();
 				// System.out.println("are");
@@ -210,22 +222,22 @@ public class UIJFrame extends JFrame {
 	}
 
 	public void threadCall() {
-		for (int i = 0; i < filtered.size(); i++) {
+		for (int i = 0; i < 50; i++) {
 			thread = new MadLibThread(filteredWords.get(i), filtered.get(i), this);
-			thread.start();
-		}
 
+		}
+		thread.start();
 		new DisplayFrame(textFile, words, image).setVisible(true);
 		dispose();
 	}
 
-	public void randomThreadCall() {
+	public void randomThreadCall() throws IOException {
 
-		for (int i = 0; i < filtered.size(); i++) {
-			randomThread = new RandomThread(filtered.get(i), this);
-			thread.start();
+		// for (int i = 0; i < filtered.size(); i++) {
+		randomThread = new RandomThread(filtered.get(0), this);
 
-		}
+		// }
+		randomThread.start();
 	}
 
 	public void checkWord(String pos, String response) throws NotEqualsException {
@@ -241,8 +253,14 @@ public class UIJFrame extends JFrame {
 			for (PartsOfSpeech pos : PartsOfSpeech.values()) {
 				if (partsOfSpeech[i].equalsIgnoreCase(pos.name())) {
 					filtered.add(partsOfSpeech[i]);
-					filteredWords.add(words.get(i));
 					index.add(i);
+
+					if (!(words.isEmpty())) {
+						filteredWords.add(words.get(i));
+
+					} else {
+						break;
+					}
 
 				}
 

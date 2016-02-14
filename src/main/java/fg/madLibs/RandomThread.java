@@ -43,7 +43,12 @@ public class RandomThread extends Thread {
 		}
 
 		String word = (String) response.getBody().getObject().getJSONObject("results").getJSONArray("data").get(0);
+		System.out.println(word); // For testing purposes
 		frame.addRandomWords(word);
+		// ArrayList<String> test = new ArrayList<String>(); // For testing
+		// purposes
+		// test.add(word);
+		// System.out.println(test);
 
 	}
 

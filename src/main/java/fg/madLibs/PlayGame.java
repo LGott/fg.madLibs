@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 //import the sun.audio package
 
 public class PlayGame extends JFrame {
@@ -55,6 +56,8 @@ public class PlayGame extends JFrame {
 		topPanel.add(label);
 		container.add(topPanel, BorderLayout.NORTH);
 		container.add(buttonPanel, BorderLayout.SOUTH);
+
+		String musicFile = "Ring05.wav";
 
 		button.addActionListener(new ActionListener() {
 
