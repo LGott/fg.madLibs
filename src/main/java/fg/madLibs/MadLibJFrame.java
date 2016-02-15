@@ -14,7 +14,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.plaf.basic.BasicComboPopup;
 
 public class MadLibJFrame extends JFrame {
 
@@ -38,6 +40,8 @@ public class MadLibJFrame extends JFrame {
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
 		container.setBackground(Color.BLACK);
+		
+		Font font = new Font("Type Embellishments One LET", Font.BOLD, 18);
 
 		topPanel = new JPanel();
 		topPanel.setLayout(new BorderLayout());
@@ -50,21 +54,6 @@ public class MadLibJFrame extends JFrame {
 		container.add(topPanel, BorderLayout.NORTH);
 		container.add(buttonPanel, BorderLayout.CENTER);
 
-		one = new JButton("One");
-		one.setBackground(Color.ORANGE);
-		one.setPreferredSize(new Dimension(80, 40));
-
-		two = new JButton("Two");
-		two.setBackground(Color.ORANGE);
-		two.setPreferredSize(new Dimension(80, 40));
-
-		three = new JButton("Three");
-		three.setBackground(Color.ORANGE);
-		three.setPreferredSize(new Dimension(80, 40));
-
-		four = new JButton("Four");
-		four.setBackground(Color.ORANGE);
-		four.setPreferredSize(new Dimension(80, 40));
 
 		icon = new ImageIcon("./logo.png");
 		iconLabel = new JLabel();
@@ -85,68 +74,77 @@ public class MadLibJFrame extends JFrame {
 
 		submit = new JButton("Submit");
 		buttonPanel.add(submit, BorderLayout.SOUTH);
-		// buttonPanel.add(one);
-		// buttonPanel.add(two);
-		// buttonPanel.add(three);
-		// buttonPanel.add(four);
-
-		String[] options = { "Advice from Dad", "Interview", "How To Wash Your Face", "Vacation" };
+		
+		String[] options = { "Advice from Dad", "Interview",
+				"How To Wash Your Face", "Vacation" };
 
 		box = new JComboBox<String>(options);
-		box.setBackground(Color.GRAY);
-		box.setForeground((Color.ORANGE));
+		box.setBackground(Color.BLACK);
+		box.setForeground((Color.decode("#FF9900")));
+		box.setFont(font);
 		box.setSelectedIndex(3);
 		box.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+		
+		Object child = box.getAccessibleContext().getAccessibleChild(0);
+		BasicComboPopup popup = (BasicComboPopup)child;
+		JList list = popup.getList();
+		list.setSelectionBackground(Color.decode("#FF8000"));
 
 		buttonPanel.add(box, BorderLayout.NORTH);
 
+		submit.setBackground(Color.decode("#FF9900"));
+		submit.setForeground(Color.BLACK);
+		submit.setFont(font);
+		submit.setHorizontalAlignment(JButton.CENTER);
+		submit.setVerticalAlignment(JButton.CENTER);
+		//submit.setPreferredSize(new Dimension(80,20));
+		
 		submit.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 
 				int select = box.getSelectedIndex();
 
+				String story = null;
+				String imageURL = null;
+
 				switch (select) {
 
 				case 0:
 
-					try {
-						new UIJFrame("Mad Lib Advice From Dad.txt", "AdviceFromDadImage.jpeg").setVisible(true);
-						;
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					story = "Mad Lib Advice From Dad.txt";
+					imageURL = "AdviceFromDadImage.jpeg";
 
 					break;
 				case 1:
 
-					try {
-						new UIJFrame("Mad Lib Job Interview.txt", "AdviceFromDadImage.jpeg").setVisible(true);
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					story = "Mad Lib Job Interview.txt";
+					imageURL = "AdviceFromDadImage.jpeg";
+
 					break;
 
 				case 2:
 
-					try {
-						new UIJFrame("How To Wash Your Face.txt", "AdviceFromDadImage.jpeg").setVisible(true);
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					story = "How To Wash Your Face.txt";
+					imageURL = "AdviceFromDadImage.jpeg";
 
 					break;
 
 				case 3:
-					try {
-						new UIJFrame("Vacation.txt", "AdviceFromDadImage.jpeg").setVisible(true);
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+
+					story = "Vacation.txt";
+					imageURL = "AdviceFromDadImage.jpeg";
+
+					break;
+
+				}
+
+				try {
+					new UIJFrame(story, imageURL).setVisible(true);
+					dispose();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 
 				}
 			}

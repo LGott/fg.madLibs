@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,6 +46,7 @@ public class UIJFrame extends JFrame {
 	private JButton submit;
 	private MadLibThread thread;
 	private RandomThread randomThread;
+	private int counter = 0;
 
 	public UIJFrame(String filename, String imageURL) throws IOException {
 
@@ -54,16 +56,24 @@ public class UIJFrame extends JFrame {
 
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
+		container.setBackground(Color.decode("#9F0251"));
+
+		// container.setBackground(Color.BLACK);
 
 		JPanel north = new JPanel();
 		north.setBackground(Color.decode("#8C489F"));
 		container.add(north, BorderLayout.NORTH);
+
+		JPanel south = new JPanel();
+		south.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 3));
+		south.setBackground((Color.decode("#9F0251")));
 
 		Font font = new Font("Type Embellishments One LET", Font.BOLD, 18);
 
 		JPanel main = new JPanel();
 		main.setBackground((Color.decode("#9F0251")));
 		container.add(main);
+
 		JScrollPane scroll = new JScrollPane(main, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		container.add(scroll);
@@ -74,7 +84,9 @@ public class UIJFrame extends JFrame {
 		layout.setAutoCreateGaps(true);
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+
 		GroupLayout.Group yLabelGroup = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
+
 		hGroup.addGroup(yLabelGroup);
 
 		GroupLayout.Group yText = layout.createParallelGroup();
@@ -110,12 +122,16 @@ public class UIJFrame extends JFrame {
 
 		add(submit, BorderLayout.SOUTH);
 
+		labels = new ArrayList<JLabel>();
+		texts = new ArrayList<JTextField>();
+
 		readFile(fileName);
 
 		int p = GroupLayout.PREFERRED_SIZE;
 
-		for (int i = 0; i < partsOfSpeech.length; i++) {
-			JLabel label = new JLabel((i + 1 + ". " + partsOfSpeech[i]));
+		for (counter = 0; counter < partsOfSpeech.length; counter++) {
+			final String speech = partsOfSpeech[counter];
+			final JLabel label = new JLabel((counter + 1 + ". " + partsOfSpeech[counter]));
 			label.setForeground(Color.decode("#EC799A"));
 			label.setFont(font);
 			labels.add(label);
@@ -124,6 +140,7 @@ public class UIJFrame extends JFrame {
 			field.setForeground(Color.decode("#9F0251"));
 			field.setFont(font);
 			field.setPreferredSize(new Dimension(150, 25));
+			texts.add(field);
 			field.addFocusListener(new FocusListener() {
 
 				public void focusGained(FocusEvent arg0) {
@@ -131,11 +148,25 @@ public class UIJFrame extends JFrame {
 				}
 
 				public void focusLost(FocusEvent arg0) {
+					words.add(field.getText());
+					// for (PartsOfSpeech pos : PartsOfSpeech.values()) TODO
+					{
+						// if (speech.equalsIgnoreCase(pos.name()))
+						{
+							filtered.add(speech);
+							filteredWords.add(field.getText());
+							index.add(counter);
+							threadCall(field.getText(), speech);
+
+						}
+					}
 
 				}
-
 			});
-			texts.add(field);
+
+			// displayText();
+			// new DisplayFrame(textFile, words, image).setVisible(true);
+
 		}
 
 		for (JLabel label : labels) {
@@ -147,6 +178,7 @@ public class UIJFrame extends JFrame {
 		}
 
 		for (int k = 0; k < labels.size(); k++) {
+
 			vGroup.addGroup(layout.createParallelGroup().addComponent(labels.get(k))
 					.addComponent(texts.get(k), p, p, p));
 		}
@@ -155,16 +187,11 @@ public class UIJFrame extends JFrame {
 
 			public void actionPerformed(ActionEvent arg0) {
 
-				for (int i = 0; i < texts.size(); i++) {
+				dispose();
+				new DisplayFrame(textFile, words, image).setVisible(true);
 
-					words.add(texts.get(i).getText());
-
-				}
-				filterArray();
-				threadCall();
-
-				displayText();
 			}
+
 		});
 
 		randomButton.addActionListener(new ActionListener() {
@@ -186,11 +213,15 @@ public class UIJFrame extends JFrame {
 					e.printStackTrace();
 				}
 				// System.out.println("How");
+
 				displayRandom();
+
 				System.out.println(randomWords);
 				// System.out.println("are");
+
 			}
 		});
+
 	}
 
 	public void readFile(String filename) throws FileNotFoundException {
@@ -215,7 +246,9 @@ public class UIJFrame extends JFrame {
 				counter++;
 			}
 		}
+
 		System.out.println(textFile.toString().replace(",", " ").replace("[", "").replace("]", "").trim());
+
 	}
 
 	public void addRandomWords(String word) {
@@ -224,23 +257,26 @@ public class UIJFrame extends JFrame {
 
 	}
 
-	public void threadCall() {
-		for (int i = 0; i < 50; i++) {
-			thread = new MadLibThread(filteredWords.get(i), filtered.get(i), this);
+	public void threadCall(String word, String partOfSpeech) {
 
-		}
+		thread = new MadLibThread(word, partOfSpeech, this);
 		thread.start();
-		new DisplayFrame(textFile, words, image).setVisible(true);
-		dispose();
+
+		// new DisplayFrame(textFile, words, image).setVisible(true);
+		// dispose();
+
 	}
 
 	public void randomThreadCall() throws IOException {
 
-		// for (int i = 0; i < filtered.size(); i++) {
-		randomThread = new RandomThread(filtered.get(0), this);
+		for (int i = 0; i < filtered.size(); i++) {
 
-		// }
-		randomThread.start();
+			// for (int i = 0; i < filtered.size(); i++) {
+			randomThread = new RandomThread(filtered.get(0), this);
+
+			// }
+			randomThread.start();
+		}
 	}
 
 	public void checkWord(String pos, String response) {
@@ -252,14 +288,15 @@ public class UIJFrame extends JFrame {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	public void filterArray() {
 
 		for (int i = 0; i < partsOfSpeech.length; i++) {
-			for (PartsOfSpeech pos : PartsOfSpeech.values()) {
-				if (partsOfSpeech[i].equalsIgnoreCase(pos.name())) {
+			// for (PartsOfSpeech pos : PartsOfSpeech.values()) TODO
+			{
+				// if (partsOfSpeech[i].equalsIgnoreCase(pos.name()))
+				{
 					filtered.add(partsOfSpeech[i]);
 					index.add(i);
 
@@ -272,6 +309,7 @@ public class UIJFrame extends JFrame {
 				}
 			}
 		}
+
 		System.out.println(filtered.toString());
 		System.out.println(filteredWords.toString());
 		System.out.println(index);

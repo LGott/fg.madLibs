@@ -12,7 +12,11 @@ three ; a day, and fathers play golf, and mothers
 sit around ; . Last summer, my little brother 
 fell in a/an ; and got poison ; all 
 over his ; . My family is going to go to (the) 
+<<<<<<< HEAD
+; , and I will practice ;.Parents 
+=======
 ; , and I will practice ; . Parents 
+>>>>>>> 83e6489d601046f0e5862b0d6296007ce0f04d52
 need vacations more than kids because parents are always very 
 ; and because they have to work ;
 hours every day all year making enough ; to pay 

@@ -11,7 +11,6 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 
 public class RandomThread extends Thread {
 
-	// ArrayList<String> randomWords;
 	private String pos;
 	private HttpResponse<JsonNode> response = null;
 	private UIJFrame frame;
@@ -26,6 +25,7 @@ public class RandomThread extends Thread {
 
 	@Override
 	public void run() {
+
 		for (int i = 0; i < 6; i++) {
 			Random rand = new Random();
 			int num = rand.nextInt(28) + 10; // random number from 150 to 500
@@ -46,15 +46,14 @@ public class RandomThread extends Thread {
 
 			String word = (String) response.getBody().getObject().getJSONObject("results").getJSONArray("data").get(0);
 			System.out.println(word); // For testing purposes For testing
-										// purposes
+			// purposes
 			frame.addRandomWords(word);
 
 			test.add(word);
 			System.out.println(test);
 		}
-	}
 
-	// }
+	}
 
 	public static void main(String args[]) throws IOException {
 

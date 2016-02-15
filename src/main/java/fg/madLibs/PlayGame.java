@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.io.IOException;
 
 import javax.swing.ImageIcon;
@@ -34,28 +35,15 @@ public class PlayGame extends JFrame {
 		container.setLayout(new BorderLayout());
 		container.setBackground(Color.BLACK);
 
-		topPanel = new JPanel();
-		topPanel.setLayout(new BorderLayout());
-		topPanel.setBackground(Color.BLACK);
+		PlayGamePanel panel = new PlayGamePanel();
 
-		buttonPanel = new JPanel();
-		buttonPanel.setLayout(new FlowLayout());
-		buttonPanel.setBackground(Color.BLACK);
-
-		ImageIcon big = new ImageIcon("./MadLibPic.png");
-		label = new JLabel();
-		label.setHorizontalAlignment(JLabel.CENTER);
-		label.setVerticalAlignment(JLabel.CENTER);
-		label.setIcon(big);
+		container.add(panel, BorderLayout.CENTER);
 
 		button = new JButton("PLAY GAME!");
 		button.setPreferredSize(new Dimension(150, 40));
 		button.setBackground(Color.MAGENTA);
-		buttonPanel.add(button);
 
-		topPanel.add(label);
-		container.add(topPanel, BorderLayout.NORTH);
-		container.add(buttonPanel, BorderLayout.SOUTH);
+		container.add(button, BorderLayout.SOUTH);
 
 		String musicFile = "Ring05.wav";
 
@@ -68,13 +56,13 @@ public class PlayGame extends JFrame {
 
 			}
 		});
+
 	}
 
 	public static void main(String[] args) {
 		try {
 			new PlayGame().setVisible(true);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
