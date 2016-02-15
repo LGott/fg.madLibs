@@ -25,21 +25,25 @@ import javax.swing.JTextField;
 
 public class UIJFrame extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String[] partsOfSpeech;
 	private JLabel label;
 	private ArrayList<String> words;
-	private JButton submit;
 	private ArrayList<JLabel> labels;
 	private ArrayList<JTextField> texts;
-	private MadLibThread thread;
 	private ArrayList<String> filtered;
 	private ArrayList<String> filteredWords;
 	private ArrayList<String> textFile;
-	private String fileName;
 	private ArrayList<String> randomWords;
-	private String image;
 	private ArrayList<Integer> index;
+	private String fileName;
+	private String image;
 	private JButton randomButton;
+	private JButton submit;
+	private MadLibThread thread;
 	private RandomThread randomThread;
 
 	public UIJFrame(String filename, String imageURL) throws IOException {
@@ -81,26 +85,27 @@ public class UIJFrame extends JFrame {
 		layout.setVerticalGroup(vGroup);
 
 		this.image = imageURL;
-		labels = new ArrayList<JLabel>();
-		texts = new ArrayList<JTextField>();
+		this.labels = new ArrayList<JLabel>();
+		this.texts = new ArrayList<JTextField>();
 		this.label = new JLabel("Fill out the text boxes below with the appropriate information: ");
-		label.setBackground(Color.decode("#8C489F"));
-		label.setOpaque(true);
-		label.setForeground(Color.decode("#C3C3E5"));
-		label.setFont(font);
+		this.label.setBackground(Color.decode("#8C489F"));
+		this.label.setOpaque(true);
+		this.label.setForeground(Color.decode("#C3C3E5"));
+		this.label.setFont(font);
 		north.add(label);
 
 		this.fileName = filename;
 		this.submit = new JButton("Submit");
-		submit.setBackground(Color.decode("#177F75"));
-		submit.setForeground(Color.decode("#CBFFFA"));
-		submit.setFont(font);
+		this.submit.setBackground(Color.decode("#177F75"));
+		this.submit.setForeground(Color.decode("#CBFFFA"));
+		this.submit.setFont(font);
 		this.filtered = new ArrayList<String>();
 		this.filteredWords = new ArrayList<String>();
 		this.textFile = new ArrayList<String>();
-		randomWords = new ArrayList<String>();
+		this.randomWords = new ArrayList<String>();
+		this.words = new ArrayList<String>();
 		this.index = new ArrayList<Integer>();
-		randomButton = new JButton("Randomize My MadLib!!");
+		this.randomButton = new JButton("Randomize My MadLib!!");
 		add(randomButton, BorderLayout.EAST);
 
 		add(submit, BorderLayout.SOUTH);
@@ -146,8 +151,6 @@ public class UIJFrame extends JFrame {
 					.addComponent(texts.get(k), p, p, p));
 		}
 
-		this.words = new ArrayList<String>();
-
 		submit.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -160,7 +163,7 @@ public class UIJFrame extends JFrame {
 				filterArray();
 				threadCall();
 
-				// displayText();
+				displayText();
 			}
 		});
 
@@ -184,6 +187,7 @@ public class UIJFrame extends JFrame {
 				}
 				// System.out.println("How");
 				displayRandom();
+				System.out.println(randomWords);
 				// System.out.println("are");
 			}
 		});
@@ -210,15 +214,14 @@ public class UIJFrame extends JFrame {
 				textFile.set(i, words.get(counter));
 				counter++;
 			}
-
 		}
-
 		System.out.println(textFile.toString().replace(",", " ").replace("[", "").replace("]", "").trim());
 	}
 
 	public void addRandomWords(String word) {
 
 		randomWords.add(word);
+
 	}
 
 	public void threadCall() {
@@ -240,9 +243,14 @@ public class UIJFrame extends JFrame {
 		randomThread.start();
 	}
 
-	public void checkWord(String pos, String response) throws NotEqualsException {
+	public void checkWord(String pos, String response) {
 		if (!pos.equalsIgnoreCase(response)) {
-			throw new NotEqualsException();
+			try {
+				throw new NotEqualsException();
+			} catch (NotEqualsException e) {
+				System.out.println("Word entered is not the correct part of speech. Please Try again!");
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -261,9 +269,7 @@ public class UIJFrame extends JFrame {
 					} else {
 						break;
 					}
-
 				}
-
 			}
 		}
 		System.out.println(filtered.toString());
@@ -274,7 +280,6 @@ public class UIJFrame extends JFrame {
 	public void displayRandom() {
 		for (int i = 0; i < index.size(); i++) {
 			texts.set(index.get(i), new JTextField(randomWords.get(i)));
-
 		}
 	}
 

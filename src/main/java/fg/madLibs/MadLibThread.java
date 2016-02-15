@@ -37,12 +37,7 @@ public class MadLibThread extends Thread {
 		String stringResponse = response.getBody().getArray().getJSONObject(0).getJSONArray("definitions")
 				.getJSONObject(0).getString("partOfSpeech");
 
-		try {
-			frame.checkWord(partOfSpeech, stringResponse);
-		} catch (NotEqualsException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		frame.checkWord(partOfSpeech, stringResponse);
 
 	}
 
