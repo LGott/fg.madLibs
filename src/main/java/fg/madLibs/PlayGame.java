@@ -45,6 +45,8 @@ public class PlayGame extends JFrame {
 
 		container.add(button, BorderLayout.SOUTH);
 
+		String musicFile = "Ring05.wav";
+
 		button.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {

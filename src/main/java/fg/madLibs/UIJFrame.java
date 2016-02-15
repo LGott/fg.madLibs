@@ -196,8 +196,23 @@ public class UIJFrame extends JFrame {
 		randomButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
+
+				// System.out.println("Hello");
 				filterArray();
-				randomThreadCall();
+				try {
+					randomThreadCall();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				// System.out.println("How");
+
 				displayRandom();
 			}
 		});
@@ -244,14 +259,18 @@ public class UIJFrame extends JFrame {
 
 		// new DisplayFrame(textFile, words, image).setVisible(true);
 		// dispose();
+
 	}
 
-	public void randomThreadCall() {
+	public void randomThreadCall() throws IOException {
 
 		for (int i = 0; i < filtered.size(); i++) {
-			randomThread = new RandomThread(filtered.get(i), this);
-			randomThread.start();
 
+			// for (int i = 0; i < filtered.size(); i++) {
+			randomThread = new RandomThread(filtered.get(0), this);
+
+			// }
+			randomThread.start();
 		}
 	}
 
