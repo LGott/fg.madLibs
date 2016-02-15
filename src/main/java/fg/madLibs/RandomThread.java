@@ -25,7 +25,9 @@ public class RandomThread extends Thread {
 	public void run() {
 
 		Random rand = new Random();
+
 		int num = rand.nextInt(28) + 10; // random number from 10 to 28
+
 		StringBuilder builder = new StringBuilder();
 
 		builder.append("https://wordsapiv1.p.mashape.com/words/?partOfSpeech=");
@@ -34,10 +36,12 @@ public class RandomThread extends Thread {
 		builder.append(num);
 
 		try {
+
 			response = Unirest
 					.get(builder.toString())
 					.header("X-Mashape-Key",
 							"LsvNmn9sVvmshJNr08Cav83z1Eovp1BNciPjsnA0yzYSlgfJOE")
+
 					.header("Accept", "application/json").asJson();
 		} catch (UnirestException e) {
 			e.printStackTrace();
@@ -45,6 +49,7 @@ public class RandomThread extends Thread {
 
 		String word = (String) response.getBody().getObject()
 				.getJSONObject("results").getJSONArray("data").get(0);
+
 		frame.addRandomWords(word);
 
 	}

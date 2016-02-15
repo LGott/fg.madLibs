@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +15,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -23,8 +23,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-
-import com.mashape.unirest.http.JsonNode;
 
 public class UIJFrame extends JFrame {
 
@@ -44,28 +42,34 @@ public class UIJFrame extends JFrame {
 	private ArrayList<Integer> index;
 	private JButton randomButton;
 	private RandomThread randomThread;
+	private int counter = 0;
 
 	public UIJFrame(String filename, String imageURL) throws IOException {
 
-		//HELLO!
-		//How are you!
 		setTitle("MadLibs");
 		setSize(700, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
+		container.setBackground(Color.decode("#9F0251"));
+
 		// container.setBackground(Color.BLACK);
 
 		JPanel north = new JPanel();
 		north.setBackground(Color.decode("#8C489F"));
 		container.add(north, BorderLayout.NORTH);
 
+		JPanel south = new JPanel();
+		south.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 3));
+		south.setBackground((Color.decode("#9F0251")));
+
 		Font font = new Font("Type Embellishments One LET", Font.BOLD, 18);
 
 		JPanel main = new JPanel();
 		main.setBackground((Color.decode("#9F0251")));
 		container.add(main);
+
 		JScrollPane scroll = new JScrollPane(main,
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -77,8 +81,10 @@ public class UIJFrame extends JFrame {
 		layout.setAutoCreateGaps(true);
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+
 		GroupLayout.Group yLabelGroup = layout
 				.createParallelGroup(GroupLayout.Alignment.TRAILING);
+
 		hGroup.addGroup(yLabelGroup);
 
 		GroupLayout.Group yText = layout.createParallelGroup();
@@ -91,8 +97,10 @@ public class UIJFrame extends JFrame {
 		this.image = imageURL;
 		labels = new ArrayList<JLabel>();
 		texts = new ArrayList<JTextField>();
+
 		this.label = new JLabel(
 				"Fill out the text boxes below with the appropriate information: ");
+
 		label.setBackground(Color.decode("#8C489F"));
 		label.setOpaque(true);
 		label.setForeground(Color.decode("#C3C3E5"));
@@ -100,26 +108,32 @@ public class UIJFrame extends JFrame {
 		north.add(label);
 
 		this.fileName = filename;
-		this.submit = new JButton("Submit");
+		this.submit = new JButton("Display the Story!");
 		submit.setBackground(Color.decode("#177F75"));
 		submit.setForeground(Color.decode("#CBFFFA"));
 		submit.setFont(font);
 		this.filtered = new ArrayList<String>();
 		this.filteredWords = new ArrayList<String>();
 		this.textFile = new ArrayList<String>();
+		this.words = new ArrayList<String>();
 		randomWords = new ArrayList<String>();
 		this.index = new ArrayList<Integer>();
 		randomButton = new JButton("Randomize My MadLib!!");
-		add(randomButton, BorderLayout.EAST);
-
-		add(submit, BorderLayout.SOUTH);
+		randomButton.setBackground(Color.decode("#177F75"));
+		randomButton.setForeground(Color.decode("#CBFFFA"));
+		randomButton.setFont(font);
+		container.add(south, BorderLayout.SOUTH);
+		south.add(submit);
+		south.add(randomButton);
 
 		readFile(fileName);
 
 		int p = GroupLayout.PREFERRED_SIZE;
 
-		for (int i = 0; i < partsOfSpeech.length; i++) {
-			JLabel label = new JLabel((i + 1 + ". " + partsOfSpeech[i]));
+		for (counter = 0; counter < partsOfSpeech.length; counter++) {
+			final String speech = partsOfSpeech[counter];
+			final JLabel label = new JLabel(
+					(counter + 1 + ". " + partsOfSpeech[counter]));
 			label.setForeground(Color.decode("#EC799A"));
 			label.setFont(font);
 			labels.add(label);
@@ -128,19 +142,31 @@ public class UIJFrame extends JFrame {
 			field.setForeground(Color.decode("#9F0251"));
 			field.setFont(font);
 			field.setPreferredSize(new Dimension(150, 25));
-			field.addFocusListener(new FocusListener(){
+			texts.add(field);
+			field.addFocusListener(new FocusListener() {
 
 				public void focusGained(FocusEvent arg0) {
-					words.add(field.getText());
+					// words.add(field.getText());
 				}
 
 				public void focusLost(FocusEvent arg0) {
-					
+					words.add(field.getText());
+					for (PartsOfSpeech pos : PartsOfSpeech.values()) {
+						if (speech.equalsIgnoreCase(pos.name())) {
+							filtered.add(speech);
+							filteredWords.add(field.getText());
+							index.add(counter);
+							threadCall(field.getText(), speech);
+
+						}
+					}
+
 				}
-				
-				
 			});
-			texts.add(field);
+
+			// displayText();
+			// new DisplayFrame(textFile, words, image).setVisible(true);
+
 		}
 
 		for (JLabel label : labels) {
@@ -152,44 +178,32 @@ public class UIJFrame extends JFrame {
 		}
 
 		for (int k = 0; k < labels.size(); k++) {
+
 			vGroup.addGroup(layout.createParallelGroup()
 					.addComponent(labels.get(k))
 					.addComponent(texts.get(k), p, p, p));
 		}
 
-		this.words = new ArrayList<String>();
-
 		submit.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-
-				for (int i = 0; i < texts.size(); i++) {
-
-					words.add(texts.get(i).getText());
-
-				}
-				filterArray();
-				threadCall();
-				
-				
-				// displayText();
+				dispose();
+				new DisplayFrame(textFile, words, image).setVisible(true);
 			}
+
 		});
 
 		randomButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-
-				// System.out.println("Hello");
+				filterArray();
 				randomThreadCall();
-				// System.out.println("How");
 				displayRandom();
-				// System.out.println("are");
 			}
 		});
+
 	}
 
-	
 	public void readFile(String filename) throws FileNotFoundException {
 
 		Scanner file = new Scanner(new File(filename));
@@ -223,29 +237,27 @@ public class UIJFrame extends JFrame {
 		randomWords.add(word);
 	}
 
-	public void threadCall() {
-		for (int i = 0; i < filtered.size(); i++) {
-			thread = new MadLibThread(filteredWords.get(i), filtered.get(i),
-					this);
-			thread.start();
-		}
-		
-		new DisplayFrame(textFile, words, image).setVisible(true);
-		dispose();
+	public void threadCall(String word, String partOfSpeech) {
+
+		thread = new MadLibThread(word, partOfSpeech, this);
+		thread.start();
+
+		// new DisplayFrame(textFile, words, image).setVisible(true);
+		// dispose();
 	}
 
 	public void randomThreadCall() {
 
 		for (int i = 0; i < filtered.size(); i++) {
 			randomThread = new RandomThread(filtered.get(i), this);
-			thread.start();
+			randomThread.start();
 
 		}
 	}
 
 	public void checkWord(String pos, String response)
 			throws NotEqualsException {
-		if (!pos.equalsIgnoreCase(response)) {
+		if (!(pos.equalsIgnoreCase(response))) {
 			throw new NotEqualsException();
 		}
 
@@ -257,11 +269,15 @@ public class UIJFrame extends JFrame {
 			for (PartsOfSpeech pos : PartsOfSpeech.values()) {
 				if (partsOfSpeech[i].equalsIgnoreCase(pos.name())) {
 					filtered.add(partsOfSpeech[i]);
-					filteredWords.add(words.get(i));
 					index.add(i);
 
-				}
+					if (!(words.isEmpty())) {
+						filteredWords.add(words.get(i));
 
+					} else {
+						break;
+					}
+				}
 			}
 		}
 		System.out.println(filtered.toString());
@@ -275,8 +291,6 @@ public class UIJFrame extends JFrame {
 
 		}
 	}
-	
-	
 
 	public static void main(String[] args) throws IOException {
 		new UIJFrame("How To Wash Your Face.txt", "AdviceFromDadImage.jpeg")

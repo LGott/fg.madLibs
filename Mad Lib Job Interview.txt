@@ -4,10 +4,17 @@ Job Interview
 Congratulations! You finally managed to get a job interview at ; . Follow these 
 ; steps and you'll be ; for sure! 
 1) Make sure you dress appropriately. You should probably wear something like a ; 
+<<<<<<< HEAD
 ; . Make sure its not too ; or ; . Prospective employers
 do not like to see too much ; . 
 2) Be sure to ; and ; your ; before the interview. Make sure your breath is ;.
 3) Smile, be ; and remember a firm ; shake is always a plus! 
+=======
+;. Make sure its not too ; or ; . Prospective employers
+do not like to see too much ; . 
+2) Be sure to ; and ; your ; before the interview. Make sure your breath is ; .
+3) Smile, be ; and remember a firm ; shake is always a plus ! 
+>>>>>>> 83e6489d601046f0e5862b0d6296007ce0f04d52
 4) Make sure to mention such topics as ; ; and ; . Be sure to
 avoid talking about ; They might get the wrong impression and think you are too 
 ; . 
