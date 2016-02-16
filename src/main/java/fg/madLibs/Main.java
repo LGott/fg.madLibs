@@ -16,8 +16,8 @@ public class Main {
 		HttpResponse<JsonNode> response = null;
 
 		builder.append("https://wordsapiv1.p.mashape.com/words/?partOfSpeech=");
-		builder.append("verb");
-		builder.append("&limit=100&page=28");
+		builder.append("adverb");
+		builder.append("&limit=500&page=28");
 
 		try {
 			response = Unirest

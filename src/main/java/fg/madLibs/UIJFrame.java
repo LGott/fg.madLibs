@@ -67,7 +67,7 @@ public class UIJFrame extends JFrame {
 		JPanel south = new JPanel();
 		south.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 3));
 		south.setBackground((Color.decode("#9F0251")));
-		
+
 		container.add(south, BorderLayout.SOUTH);
 
 		Font font = new Font("Type Embellishments One LET", Font.BOLD, 18);
@@ -126,11 +126,9 @@ public class UIJFrame extends JFrame {
 		this.randomButton.setBackground(Color.decode("#177F75"));
 		this.randomButton.setForeground(Color.decode("#CBFFFA"));
 		this.randomButton.setFont(font);
-		
+
 		south.add(submit);
 		south.add(randomButton);
-
-		
 
 		labels = new ArrayList<JLabel>();
 		texts = new ArrayList<JTextField>();
@@ -155,11 +153,13 @@ public class UIJFrame extends JFrame {
 
 			field.addFocusListener(new FocusListener() {
 
-				public void focusGained(FocusEvent arg0) {
-					// words.add(field.getText());
+				public void focusGained(FocusEvent e) {
+
+					field.setEditable(true);
 				}
 
-				public void focusLost(FocusEvent arg0) {
+				public void focusLost(FocusEvent e) {
+					field.setEditable(false);
 					if (!field.getText().equalsIgnoreCase("")) {
 						words.add(field.getText());
 					}
@@ -168,14 +168,13 @@ public class UIJFrame extends JFrame {
 							filtered.add(speech);
 							filteredWords.add(field.getText());
 							index.add(counter);
-							threadCall(field.getText(), speech);
+							// threadCall(field.getText(), speech);
 						}
 					}
 
 				}
 			});
 		}
-		
 
 		for (JLabel label : labels) {
 			yLabelGroup.addComponent(label);
@@ -207,26 +206,15 @@ public class UIJFrame extends JFrame {
 
 			public void actionPerformed(ActionEvent arg0) {
 
-				// System.out.println("Hello");
 				filterArray();
+
 				try {
 					randomThreadCall();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				// System.out.println("How");
 
 				displayRandom();
-
-				System.out.println(randomWords);
-				// System.out.println("are");
 
 			}
 		});
@@ -278,15 +266,12 @@ public class UIJFrame extends JFrame {
 
 		for (int i = 0; i < filtered.size(); i++) {
 
-			// for (int i = 0; i < filtered.size(); i++) {
-			randomThread = new RandomThread(filtered.get(0), this);
+			randomThread = new RandomThread(filtered.get(i).toLowerCase(), this);
 
-			// }
 			randomThread.start();
 		}
 	}
 
-	/* TODO
 	public void checkWord(boolean found) throws NotEqualsException {
 		if (!found) {
 			try {
@@ -298,7 +283,6 @@ public class UIJFrame extends JFrame {
 			}
 		}
 	}
-	*/
 
 	public void filterArray() {
 
