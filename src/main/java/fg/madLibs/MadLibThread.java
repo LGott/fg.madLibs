@@ -40,16 +40,29 @@ public class MadLibThread extends Thread {
 			e.printStackTrace();
 		}
 
-		String stringResponse = response.getBody().getArray().getJSONObject(0)
-				.getJSONArray("definitions").getJSONObject(0)
-				.getString("partOfSpeech");
-
+		int size = response.getBody().getArray().getJSONObject(0)
+				.getJSONArray("definitions").length();
+		String stringResponse = null;
+		boolean found = false;
+		for (int i = 0; i < size; i++){
+			stringResponse = response.getBody().getArray().getJSONObject(0)
+					.getJSONArray("definitions").getJSONObject(i).getString("partOfSpeech");
+			if(stringResponse.equalsIgnoreCase(partOfSpeech)){
+				found = true;
+			break;
+			
+			}
+			
+		}
+		
+		
 		try {
-			frame.checkWord(partOfSpeech, stringResponse);
+			frame.checkWord(found);
 		} catch (NotEqualsException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 
 	}
 	

@@ -143,6 +143,7 @@ public class UIJFrame extends JFrame {
 			field.setFont(font);
 			field.setPreferredSize(new Dimension(150, 25));
 			texts.add(field);
+
 			field.addFocusListener(new FocusListener() {
 
 				public void focusGained(FocusEvent arg0) {
@@ -150,7 +151,9 @@ public class UIJFrame extends JFrame {
 				}
 
 				public void focusLost(FocusEvent arg0) {
-					words.add(field.getText());
+					if (!field.getText().equalsIgnoreCase("")) {
+						words.add(field.getText());
+					}
 					for (PartsOfSpeech pos : PartsOfSpeech.values()) {
 						if (speech.equalsIgnoreCase(pos.name())) {
 							filtered.add(speech);
@@ -163,9 +166,6 @@ public class UIJFrame extends JFrame {
 
 				}
 			});
-
-			// displayText();
-			// new DisplayFrame(textFile, words, image).setVisible(true);
 
 		}
 
@@ -257,9 +257,6 @@ public class UIJFrame extends JFrame {
 		thread = new MadLibThread(word, partOfSpeech, this);
 		thread.start();
 
-		// new DisplayFrame(textFile, words, image).setVisible(true);
-		// dispose();
-
 	}
 
 	public void randomThreadCall() throws IOException {
@@ -274,9 +271,9 @@ public class UIJFrame extends JFrame {
 		}
 	}
 
-	public void checkWord(String pos, String response)
+	public void checkWord(boolean found)
 			throws NotEqualsException {
-		if (!(pos.equalsIgnoreCase(response))) {
+		if (!found) {
 			throw new NotEqualsException();
 		}
 
