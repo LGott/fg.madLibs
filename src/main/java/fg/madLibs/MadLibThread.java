@@ -18,7 +18,6 @@ public class MadLibThread extends Thread {
 		this.word = word;
 		this.partOfSpeech = partOfSpeech;
 		this.frame = frame;
-
 	}
 
 	@Override
@@ -38,9 +37,7 @@ public class MadLibThread extends Thread {
 			e.printStackTrace();
 		}
 
-
 		int size = response.getBody().getArray().getJSONObject(0).getJSONArray("definitions").length();
-		
 
 		boolean found = false;
 
@@ -54,18 +51,16 @@ public class MadLibThread extends Thread {
 			}
 		}
 
-		/*
 		try {
 			frame.checkWord(found);
 		} catch (NotEqualsException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}TODO */ 
+		}
 
 	}
 
 	public static void main(String[] args) throws IOException {
-		new MadLibThread("lightly", "adverb", new UIJFrame("How To Wash Your Face.txt", "AdviceFromDadImage.jpeg"));
+		new MadLibThread("lightly", "adverb", new UIJFrame("How to Wash Your Face.txt", "madLibAdviceFromDad.jpeg"));
 	}
 
 }

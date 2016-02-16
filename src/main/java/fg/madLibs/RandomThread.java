@@ -27,14 +27,14 @@ public class RandomThread extends Thread {
 	@Override
 	public void run() {
 
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 7; i++) {
 			Random rand = new Random();
-			int num = rand.nextInt(28) + 10; // random number from 150 to 500
+			int num = rand.nextInt(5) + 10; // random number from 150 to 500
 			StringBuilder builder = new StringBuilder();
 
 			builder.append("https://wordsapiv1.p.mashape.com/words/?partOfSpeech=");
 			builder.append(pos);
-			builder.append("&limit=500&page=");
+			builder.append("&limit=100&page=");
 			builder.append(num);
 
 			try {
@@ -50,17 +50,21 @@ public class RandomThread extends Thread {
 			// purposes
 
 			frame.addRandomWords(word);
-
+			frame.displayRandom();
+			System.out.println(word);
 			test.add(word);
 			System.out.println(test);
 		}
 
 	}
 
+	public ArrayList<String> returnWord() {
+		return this.test;
+	}
+
 	public static void main(String args[]) throws IOException {
 
-		RandomThread random = new RandomThread("noun", new UIJFrame("Mad Lib Advice From Dad.txt",
-				"AdviceFromDadImage.jpeg"));
-		random.start();
+		// RandomThread random = new RandomThread("adjective");
+		// random.start();
 	}
 }

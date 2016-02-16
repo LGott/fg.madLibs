@@ -67,7 +67,7 @@ public class UIJFrame extends JFrame {
 		JPanel south = new JPanel();
 		south.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 3));
 		south.setBackground((Color.decode("#9F0251")));
-		
+
 		container.add(south, BorderLayout.SOUTH);
 
 		Font font = new Font("Type Embellishments One LET", Font.BOLD, 18);
@@ -123,11 +123,9 @@ public class UIJFrame extends JFrame {
 		this.randomButton.setBackground(Color.decode("#177F75"));
 		this.randomButton.setForeground(Color.decode("#CBFFFA"));
 		this.randomButton.setFont(font);
-		
+
 		south.add(submit);
 		south.add(randomButton);
-
-		
 
 		labels = new ArrayList<JLabel>();
 		texts = new ArrayList<JTextField>();
@@ -164,7 +162,8 @@ public class UIJFrame extends JFrame {
 							filtered.add(speech);
 							filteredWords.add(field.getText());
 							index.add(counter);
-							threadCall(field.getText(), speech);
+
+							// threadCall(field.getText(), speech);
 						}
 					}
 
@@ -209,17 +208,13 @@ public class UIJFrame extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
 				// System.out.println("How");
 
 				displayRandom();
+				// System.out.println(randomWords);
 
-				System.out.println(randomWords);
+				System.out.println(filteredWords.toString());
 				// System.out.println("are");
 
 			}
@@ -256,7 +251,7 @@ public class UIJFrame extends JFrame {
 
 	public void addRandomWords(String word) {
 
-		randomWords.add(word);
+		filteredWords.add(word);
 
 	}
 
@@ -269,13 +264,13 @@ public class UIJFrame extends JFrame {
 
 	public void randomThreadCall() throws IOException {
 
-		for (int i = 0; i < filtered.size(); i++) {
+		for (int i = 0; i < 6; i++) {
 
-			// for (int i = 0; i < filtered.size(); i++) {
 			randomThread = new RandomThread(filtered.get(0), this);
-
-			// }
 			randomThread.start();
+			System.out.println(filteredWords.toString());
+			// ArrayList<String> randoms = randomThread.returnWord();
+			// displayRandom(randoms);
 		}
 	}
 
@@ -314,9 +309,12 @@ public class UIJFrame extends JFrame {
 	}
 
 	public void displayRandom() {
-		for (int i = 0; i < index.size(); i++) {
-			texts.set(index.get(i), new JTextField(randomWords.get(i)));
-		}
+
+		// System.out.println(randoms);
+		System.out.println(filteredWords);
+		// for (int i = 0; i < index.size(); i++) {
+		// texts.set(index.get(i), new JTextField(randomWords.get(i)));
+		// }
 	}
 
 	public static void main(String[] args) throws IOException {
