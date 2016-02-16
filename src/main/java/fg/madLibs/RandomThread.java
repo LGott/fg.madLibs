@@ -15,6 +15,7 @@ public class RandomThread extends Thread {
 	private HttpResponse<JsonNode> response = null;
 	private UIJFrame frame;
 	ArrayList<String> test;
+	String word;
 
 	public RandomThread(String pos, UIJFrame frame) {
 
@@ -44,9 +45,10 @@ public class RandomThread extends Thread {
 				e.printStackTrace();
 			}
 
-			String word = (String) response.getBody().getObject().getJSONObject("results").getJSONArray("data").get(0);
+			word = (String) response.getBody().getObject().getJSONObject("results").getJSONArray("data").get(0);
 			System.out.println(word); // For testing purposes For testing
 			// purposes
+
 			frame.addRandomWords(word);
 
 			test.add(word);

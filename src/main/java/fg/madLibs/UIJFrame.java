@@ -141,29 +141,31 @@ public class UIJFrame extends JFrame {
 			field.setFont(font);
 			field.setPreferredSize(new Dimension(150, 25));
 			texts.add(field);
-			field.addFocusListener(new FocusListener() {
 
-				public void focusGained(FocusEvent arg0) {
-					// words.add(field.getText());
-				}
+			{
+				field.addFocusListener(new FocusListener() {
 
-				public void focusLost(FocusEvent arg0) {
-					words.add(field.getText());
-					// for (PartsOfSpeech pos : PartsOfSpeech.values()) TODO
-					{
-						// if (speech.equalsIgnoreCase(pos.name()))
-						{
-							filtered.add(speech);
-							filteredWords.add(field.getText());
-							index.add(counter);
-							threadCall(field.getText(), speech);
-
-						}
+					public void focusGained(FocusEvent arg0) {
+						// words.add(field.getText());
 					}
 
-				}
-			});
+					public void focusLost(FocusEvent arg0) {
+						if (!field.getText().equalsIgnoreCase("")) {
+							words.add(field.getText());
+						}
+						for (PartsOfSpeech pos : PartsOfSpeech.values()) {
+							if (speech.equalsIgnoreCase(pos.name())) {
+								filtered.add(speech);
+								filteredWords.add(field.getText());
+								index.add(counter);
+								threadCall(field.getText(), speech);
 
+							}
+						}
+
+					}
+				});
+			}
 			// displayText();
 			// new DisplayFrame(textFile, words, image).setVisible(true);
 
@@ -279,8 +281,8 @@ public class UIJFrame extends JFrame {
 		}
 	}
 
-	public void checkWord(String pos, String response) {
-		if (!pos.equalsIgnoreCase(response)) {
+	public void checkWord(boolean found) throws NotEqualsException {
+		if (found == false) {
 			try {
 				throw new NotEqualsException();
 			} catch (NotEqualsException e) {

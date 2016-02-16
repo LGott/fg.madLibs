@@ -1,7 +1,6 @@
 package fg.madLibs;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
@@ -13,6 +12,7 @@ public class MadLibThread extends Thread {
 	private String word;
 	private String partOfSpeech;
 	private UIJFrame frame;
+	private String stringResponse;
 
 	public MadLibThread(String word, String partOfSpeech, UIJFrame frame) {
 		this.word = word;
@@ -31,24 +31,36 @@ public class MadLibThread extends Thread {
 
 		HttpResponse<JsonNode> response = null;
 		try {
-			response = Unirest
-					.get(builder.toString())
-					.header("X-Mashape-Key",
-							"LsvNmn9sVvmshJNr08Cav83z1Eovp1BNciPjsnA0yzYSlgfJOE")
+			response = Unirest.get(builder.toString())
+					.header("X-Mashape-Key", "LsvNmn9sVvmshJNr08Cav83z1Eovp1BNciPjsnA0yzYSlgfJOE")
 					.header("Accept", "application/json").asJson();
 		} catch (UnirestException e) {
 			e.printStackTrace();
 		}
 
-		String stringResponse = response.getBody().getArray().getJSONObject(0)
-				.getJSONArray("definitions").getJSONObject(0)
-				.getString("partOfSpeech");
+		int size = response.getBody().getArray().getJSONObject(0).getJSONArray("definitions").length();
+		String stringResponse = null;
 
-		frame.checkWord(partOfSpeech, stringResponse);
+		boolean found = false;
 
+		for (int i = 0; i < size; i++) {
+			stringResponse = response.getBody().getArray().getJSONObject(0).getJSONArray("definitions")
+					.getJSONObject(i).getString("partOfSpeech");
+			if (stringResponse.equalsIgnoreCase(partOfSpeech)) {
+				found = true;
+				break;
+
+			}
+		}
+		try {
+			frame.checkWord(found);
+		} catch (NotEqualsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
-	public static void main(String[] args) throws IOException{
+
+	public static void main(String[] args) throws IOException {
 		new MadLibThread("lightly", "adverb", new UIJFrame("How To Wash Your Face.txt", "AdviceFromDadImage.jpeg"));
 	}
 
