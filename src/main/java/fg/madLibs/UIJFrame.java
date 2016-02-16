@@ -76,8 +76,7 @@ public class UIJFrame extends JFrame {
 		main.setBackground((Color.decode("#9F0251")));
 		container.add(main);
 
-		JScrollPane scroll = new JScrollPane(main,
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		JScrollPane scroll = new JScrollPane(main, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		container.add(scroll);
 
@@ -88,8 +87,7 @@ public class UIJFrame extends JFrame {
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
-		GroupLayout.Group yLabelGroup = layout
-				.createParallelGroup(GroupLayout.Alignment.TRAILING);
+		GroupLayout.Group yLabelGroup = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
 
 		hGroup.addGroup(yLabelGroup);
 
@@ -103,8 +101,7 @@ public class UIJFrame extends JFrame {
 		this.image = imageURL;
 		this.labels = new ArrayList<JLabel>();
 		this.texts = new ArrayList<JTextField>();
-		this.label = new JLabel(
-				"Fill out the text boxes below with the appropriate information: ");
+		this.label = new JLabel("Fill out the text boxes below with the appropriate information: ");
 		this.label.setBackground(Color.decode("#8C489F"));
 		this.label.setOpaque(true);
 		this.label.setForeground(Color.decode("#C3C3E5"));
@@ -139,8 +136,7 @@ public class UIJFrame extends JFrame {
 
 		for (counter = 0; counter < partsOfSpeech.length; counter++) {
 			final String speech = partsOfSpeech[counter];
-			final JLabel label = new JLabel(
-					(counter + 1 + ". " + partsOfSpeech[counter]));
+			final JLabel label = new JLabel((counter + 1 + ". " + partsOfSpeech[counter]));
 			label.setForeground(Color.decode("#EC799A"));
 			label.setFont(font);
 			labels.add(label);
@@ -168,6 +164,7 @@ public class UIJFrame extends JFrame {
 							filtered.add(speech);
 							filteredWords.add(field.getText());
 							index.add(counter);
+
 							// threadCall(field.getText(), speech);
 						}
 					}
@@ -186,8 +183,7 @@ public class UIJFrame extends JFrame {
 
 		for (int k = 0; k < labels.size(); k++) {
 
-			vGroup.addGroup(layout.createParallelGroup()
-					.addComponent(labels.get(k))
+			vGroup.addGroup(layout.createParallelGroup().addComponent(labels.get(k))
 					.addComponent(texts.get(k), p, p, p));
 		}
 
@@ -215,6 +211,8 @@ public class UIJFrame extends JFrame {
 				}
 
 				displayRandom();
+				// System.out.println(randomWords);
+
 
 			}
 		});
@@ -251,7 +249,7 @@ public class UIJFrame extends JFrame {
 
 	public void addRandomWords(String word) {
 
-		randomWords.add(word);
+		filteredWords.add(word);
 
 	}
 
@@ -269,7 +267,10 @@ public class UIJFrame extends JFrame {
 			randomThread = new RandomThread(filtered.get(i).toLowerCase(), this);
 
 			randomThread.start();
+
 		}
+		
+		System.out.println(filteredWords);
 	}
 
 	public void checkWord(boolean found) throws NotEqualsException {
@@ -308,9 +309,12 @@ public class UIJFrame extends JFrame {
 	}
 
 	public void displayRandom() {
-		for (int i = 0; i < index.size(); i++) {
-			texts.set(index.get(i), new JTextField(randomWords.get(i)));
-		}
+
+		// System.out.println(randoms);
+		System.out.println(filteredWords);
+		// for (int i = 0; i < index.size(); i++) {
+		// texts.set(index.get(i), new JTextField(randomWords.get(i)));
+		// }
 	}
 
 	public static void main(String[] args) throws IOException {
