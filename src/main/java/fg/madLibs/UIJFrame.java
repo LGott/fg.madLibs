@@ -47,6 +47,7 @@ public class UIJFrame extends JFrame {
 	private MadLibThread thread;
 	private RandomThread randomThread;
 	private int counter = 0;
+	private JTextField field;
 
 	public UIJFrame(String filename, String imageURL) throws IOException {
 
@@ -140,7 +141,7 @@ public class UIJFrame extends JFrame {
 			label.setForeground(Color.decode("#EC799A"));
 			label.setFont(font);
 			labels.add(label);
-			final JTextField field = new JTextField("");
+			field = new JTextField("");
 			field.setBackground(Color.decode("#EC799A"));
 			field.setForeground(Color.decode("#9F0251"));
 			field.setFont(font);
@@ -201,7 +202,8 @@ public class UIJFrame extends JFrame {
 		randomButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-
+				//field.setText("Hello");
+				//texts.set(0, field);
 				filterArray();
 
 				try {
@@ -264,7 +266,7 @@ public class UIJFrame extends JFrame {
 
 		for (int i = 0; i < filtered.size(); i++) {
 
-			randomThread = new RandomThread(filtered.get(i).toLowerCase(), this);
+			randomThread = new RandomThread(filtered.get(i).toLowerCase(), this, index.get(i), texts, field);
 
 			randomThread.start();
 
