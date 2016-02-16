@@ -164,7 +164,7 @@ public class UIJFrame extends JFrame {
 						if (speech.equalsIgnoreCase(pos.name())) {
 							filtered.add(speech);
 							filteredWords.add(field.getText());
-							index.add(counter);
+							// index.add(counter);
 
 							// threadCall(field.getText(), speech);
 						}
@@ -202,8 +202,8 @@ public class UIJFrame extends JFrame {
 		randomButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				//field.setText("Hello");
-				//texts.set(0, field);
+				// field.setText("Hello");
+				// texts.set(0, field);
 				filterArray();
 
 				try {
@@ -214,7 +214,6 @@ public class UIJFrame extends JFrame {
 
 				displayRandom();
 				// System.out.println(randomWords);
-
 
 			}
 		});
@@ -244,8 +243,7 @@ public class UIJFrame extends JFrame {
 			}
 		}
 
-		System.out.println(textFile.toString().replace(",", " ")
-				.replace("[", "").replace("]", "").trim());
+		System.out.println(textFile.toString().replace(",", " ").replace("[", "").replace("]", "").trim());
 
 	}
 
@@ -266,12 +264,13 @@ public class UIJFrame extends JFrame {
 
 		for (int i = 0; i < filtered.size(); i++) {
 
-			randomThread = new RandomThread(filtered.get(i).toLowerCase(), this, index.get(i), texts, field);
+			randomThread = new RandomThread(filtered.get(i).toLowerCase(), this, index.get(i), texts, texts.get(index
+					.get(i)));
 
 			randomThread.start();
 
 		}
-		
+
 		System.out.println(filteredWords);
 	}
 
@@ -280,8 +279,7 @@ public class UIJFrame extends JFrame {
 			try {
 				throw new NotEqualsException();
 			} catch (NotEqualsException e) {
-				System.out
-						.println("Word entered is not the correct part of speech. Please Try again!");
+				System.out.println("Word entered is not the correct part of speech. Please Try again!");
 				e.printStackTrace();
 			}
 		}
@@ -320,8 +318,7 @@ public class UIJFrame extends JFrame {
 	}
 
 	public static void main(String[] args) throws IOException {
-		new UIJFrame("How To Wash Your Face.txt", "AdviceFromDadImage.jpeg")
-				.setVisible(true);
+		new UIJFrame("How To Wash Your Face.txt", "AdviceFromDadImage.jpeg").setVisible(true);
 	}
 
 }

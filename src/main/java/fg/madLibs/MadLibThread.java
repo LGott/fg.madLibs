@@ -31,29 +31,21 @@ public class MadLibThread extends Thread {
 		HttpResponse<JsonNode> response = null;
 
 		try {
-			response = Unirest
-					.get(builder.toString())
-					.header("X-Mashape-Key",
-							"LsvNmn9sVvmshJNr08Cav83z1Eovp1BNciPjsnA0yzYSlgfJOE")
-					.header("Accept", "application/json").asJson();
+			response = Unirest.get(builder.toString())
+					.header("X-Mashape-Key", "LsvNmn9sVvmshJNr08Cav83z1Eovp1BNciPjsnA0yzYSlgfJOE")
+							.header("Accept", "application/json").asJson();
 
 		} catch (UnirestException e) {
 			e.printStackTrace();
 		}
 
-<<<<<<< HEAD
-		int size = response.getBody().getArray().getJSONObject(0)
-				.getJSONArray("definitions").length();
-=======
 		int size = response.getBody().getArray().getJSONObject(0).getJSONArray("definitions").length();
->>>>>>> 649b30ad9fe31e3c272c7d31b1958eb6f9d58516
 
 		boolean found = false;
 
 		for (int i = 0; i < size; i++) {
-			stringResponse = response.getBody().getArray().getJSONObject(0)
-					.getJSONArray("definitions").getJSONObject(i)
-					.getString("partOfSpeech");
+			stringResponse = response.getBody().getArray().getJSONObject(0).getJSONArray("definitions")
+					.getJSONObject(i).getString("partOfSpeech");
 			if (stringResponse.equalsIgnoreCase(partOfSpeech)) {
 				found = true;
 				break;
@@ -70,12 +62,9 @@ public class MadLibThread extends Thread {
 	}
 
 	public static void main(String[] args) throws IOException {
-<<<<<<< HEAD
-		new MadLibThread("lightly", "adverb", new UIJFrame(
-				"How To Wash Your Face.txt", "AdviceFromDadImage.jpeg"));
-=======
+
 		new MadLibThread("lightly", "adverb", new UIJFrame("How to Wash Your Face.txt", "madLibAdviceFromDad.jpeg"));
->>>>>>> 649b30ad9fe31e3c272c7d31b1958eb6f9d58516
+
 	}
 
 }
