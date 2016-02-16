@@ -67,6 +67,8 @@ public class UIJFrame extends JFrame {
 		JPanel south = new JPanel();
 		south.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 3));
 		south.setBackground((Color.decode("#9F0251")));
+		
+		container.add(south, BorderLayout.SOUTH);
 
 		Font font = new Font("Type Embellishments One LET", Font.BOLD, 18);
 
@@ -110,7 +112,7 @@ public class UIJFrame extends JFrame {
 		north.add(label);
 
 		this.fileName = filename;
-		this.submit = new JButton("Submit");
+		this.submit = new JButton("Display the story!");
 		this.submit.setBackground(Color.decode("#177F75"));
 		this.submit.setForeground(Color.decode("#CBFFFA"));
 		this.submit.setFont(font);
@@ -121,9 +123,14 @@ public class UIJFrame extends JFrame {
 		this.words = new ArrayList<String>();
 		this.index = new ArrayList<Integer>();
 		this.randomButton = new JButton("Randomize My MadLib!!");
-		add(randomButton, BorderLayout.EAST);
+		this.randomButton.setBackground(Color.decode("#177F75"));
+		this.randomButton.setForeground(Color.decode("#CBFFFA"));
+		this.randomButton.setFont(font);
+		
+		south.add(submit);
+		south.add(randomButton);
 
-		add(submit, BorderLayout.SOUTH);
+		
 
 		labels = new ArrayList<JLabel>();
 		texts = new ArrayList<JTextField>();
