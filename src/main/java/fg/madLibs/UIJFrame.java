@@ -74,8 +74,7 @@ public class UIJFrame extends JFrame {
 		main.setBackground((Color.decode("#9F0251")));
 		container.add(main);
 
-		JScrollPane scroll = new JScrollPane(main,
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		JScrollPane scroll = new JScrollPane(main, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		container.add(scroll);
 
@@ -86,8 +85,7 @@ public class UIJFrame extends JFrame {
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
-		GroupLayout.Group yLabelGroup = layout
-				.createParallelGroup(GroupLayout.Alignment.TRAILING);
+		GroupLayout.Group yLabelGroup = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
 
 		hGroup.addGroup(yLabelGroup);
 
@@ -101,8 +99,7 @@ public class UIJFrame extends JFrame {
 		this.image = imageURL;
 		this.labels = new ArrayList<JLabel>();
 		this.texts = new ArrayList<JTextField>();
-		this.label = new JLabel(
-				"Fill out the text boxes below with the appropriate information: ");
+		this.label = new JLabel("Fill out the text boxes below with the appropriate information: ");
 		this.label.setBackground(Color.decode("#8C489F"));
 		this.label.setOpaque(true);
 		this.label.setForeground(Color.decode("#C3C3E5"));
@@ -134,8 +131,7 @@ public class UIJFrame extends JFrame {
 
 		for (counter = 0; counter < partsOfSpeech.length; counter++) {
 			final String speech = partsOfSpeech[counter];
-			final JLabel label = new JLabel(
-					(counter + 1 + ". " + partsOfSpeech[counter]));
+			final JLabel label = new JLabel((counter + 1 + ". " + partsOfSpeech[counter]));
 			label.setForeground(Color.decode("#EC799A"));
 			label.setFont(font);
 			labels.add(label);
@@ -168,7 +164,6 @@ public class UIJFrame extends JFrame {
 				}
 			});
 		}
-		
 
 		for (JLabel label : labels) {
 			yLabelGroup.addComponent(label);
@@ -180,8 +175,7 @@ public class UIJFrame extends JFrame {
 
 		for (int k = 0; k < labels.size(); k++) {
 
-			vGroup.addGroup(layout.createParallelGroup()
-					.addComponent(labels.get(k))
+			vGroup.addGroup(layout.createParallelGroup().addComponent(labels.get(k))
 					.addComponent(texts.get(k), p, p, p));
 		}
 
@@ -249,8 +243,7 @@ public class UIJFrame extends JFrame {
 			}
 		}
 
-		System.out.println(textFile.toString().replace(",", " ")
-				.replace("[", "").replace("]", "").trim());
+		System.out.println(textFile.toString().replace(",", " ").replace("[", "").replace("]", "").trim());
 
 	}
 
@@ -279,19 +272,16 @@ public class UIJFrame extends JFrame {
 		}
 	}
 
-	/* TODO
 	public void checkWord(boolean found) throws NotEqualsException {
 		if (!found) {
 			try {
 				throw new NotEqualsException();
 			} catch (NotEqualsException e) {
-				System.out
-						.println("Word entered is not the correct part of speech. Please Try again!");
+				System.out.println("Word entered is not the correct part of speech. Please Try again!");
 				e.printStackTrace();
 			}
 		}
 	}
-	*/
 
 	public void filterArray() {
 
@@ -323,8 +313,7 @@ public class UIJFrame extends JFrame {
 	}
 
 	public static void main(String[] args) throws IOException {
-		new UIJFrame("How To Wash Your Face.txt", "AdviceFromDadImage.jpeg")
-				.setVisible(true);
+		new UIJFrame("How To Wash Your Face.txt", "AdviceFromDadImage.jpeg").setVisible(true);
 	}
 
 }
