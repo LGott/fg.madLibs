@@ -67,7 +67,8 @@ public class MadLibThread extends Thread {
 
 	public static void main(String[] args) throws IOException {
 
-		new MadLibThread("lightly", "adverb", new UIJFrame(
-				"How to Wash Your Face.txt", "madLibAdviceFromDad.jpeg"));
+		new MadLibThread("run", "verb", new UIJFrame(
+				"How to Wash Your Face.txt", "madLibAdviceFromDad.jpeg")).start();
+
 	}
 }

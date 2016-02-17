@@ -47,7 +47,7 @@ public class UIJFrame extends JFrame {
 	private MadLibThread thread;
 	private RandomThread randomThread;
 	private int counter = 0;
-	private JTextField field;
+	//private JTextField field;
 
 	public UIJFrame(String filename, String imageURL) throws IOException {
 
@@ -77,7 +77,8 @@ public class UIJFrame extends JFrame {
 		main.setBackground((Color.decode("#9F0251")));
 		container.add(main);
 
-		JScrollPane scroll = new JScrollPane(main, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		JScrollPane scroll = new JScrollPane(main,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		container.add(scroll);
 
@@ -88,7 +89,8 @@ public class UIJFrame extends JFrame {
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
-		GroupLayout.Group yLabelGroup = layout.createParallelGroup(GroupLayout.Alignment.TRAILING);
+		GroupLayout.Group yLabelGroup = layout
+				.createParallelGroup(GroupLayout.Alignment.TRAILING);
 
 		hGroup.addGroup(yLabelGroup);
 
@@ -100,9 +102,9 @@ public class UIJFrame extends JFrame {
 		layout.setVerticalGroup(vGroup);
 
 		this.image = imageURL;
-		this.labels = new ArrayList<JLabel>();
-		this.texts = new ArrayList<JTextField>();
-		this.label = new JLabel("Fill out the text boxes below with the appropriate information: ");
+
+		this.label = new JLabel(
+				"Fill out the text boxes below with the appropriate information: ");
 		this.label.setBackground(Color.decode("#8C489F"));
 		this.label.setOpaque(true);
 		this.label.setForeground(Color.decode("#C3C3E5"));
@@ -137,26 +139,26 @@ public class UIJFrame extends JFrame {
 
 		for (counter = 0; counter < partsOfSpeech.length; counter++) {
 			final String speech = partsOfSpeech[counter];
-			final JLabel label = new JLabel((counter + 1 + ". " + partsOfSpeech[counter]));
+			final JLabel label = new JLabel(
+					(counter + 1 + ". " + partsOfSpeech[counter]));
 			label.setForeground(Color.decode("#EC799A"));
 			label.setFont(font);
 			labels.add(label);
-			field = new JTextField("");
+			final JTextField field = new JTextField("");
 			field.setBackground(Color.decode("#EC799A"));
 			field.setForeground(Color.decode("#9F0251"));
 			field.setFont(font);
-			field.setPreferredSize(new Dimension(150, 25));
-			texts.add(field);
+			field.setPreferredSize(new Dimension(200, 25));
+			
 
 			field.addFocusListener(new FocusListener() {
 
 				public void focusGained(FocusEvent e) {
 
-					field.setEditable(true);
 				}
 
 				public void focusLost(FocusEvent e) {
-					field.setEditable(false);
+					
 					if (!field.getText().equalsIgnoreCase("")) {
 						words.add(field.getText());
 					}
@@ -164,14 +166,17 @@ public class UIJFrame extends JFrame {
 						if (speech.equalsIgnoreCase(pos.name())) {
 							filtered.add(speech);
 							filteredWords.add(field.getText());
-							//index.add(counter);
+							// index.add(counter);
 
-							// threadCall(field.getText(), speech);
+							threadCall(field.getText().toLowerCase(),
+									speech.toLowerCase());
 						}
 					}
-
 				}
 			});
+			
+			texts.add(field);
+
 		}
 
 		for (JLabel label : labels) {
@@ -184,7 +189,8 @@ public class UIJFrame extends JFrame {
 
 		for (int k = 0; k < labels.size(); k++) {
 
-			vGroup.addGroup(layout.createParallelGroup().addComponent(labels.get(k))
+			vGroup.addGroup(layout.createParallelGroup()
+					.addComponent(labels.get(k))
 					.addComponent(texts.get(k), p, p, p));
 		}
 
@@ -202,8 +208,8 @@ public class UIJFrame extends JFrame {
 		randomButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				//field.setText("Hello");
-				//texts.set(0, field);
+				// field.setText("Hello");
+				// texts.set(0, field);
 				filterArray();
 
 				try {
@@ -214,7 +220,6 @@ public class UIJFrame extends JFrame {
 
 				displayRandom();
 				// System.out.println(randomWords);
-
 
 			}
 		});
@@ -266,12 +271,13 @@ public class UIJFrame extends JFrame {
 
 		for (int i = 0; i < filtered.size(); i++) {
 
-			randomThread = new RandomThread(filtered.get(i).toLowerCase(), this, index.get(i), texts, field);
+			randomThread = new RandomThread(filtered.get(i).toLowerCase(),
+					this, index.get(i), texts, texts.get(index.get(i)));
 
 			randomThread.start();
 
 		}
-		
+
 		System.out.println(filteredWords);
 	}
 
