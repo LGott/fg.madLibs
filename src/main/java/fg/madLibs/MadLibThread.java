@@ -33,7 +33,7 @@ public class MadLibThread extends Thread {
 		try {
 			response = Unirest.get(builder.toString())
 					.header("X-Mashape-Key", "LsvNmn9sVvmshJNr08Cav83z1Eovp1BNciPjsnA0yzYSlgfJOE")
-					.header("Accept", "application/json").asJson();
+							.header("Accept", "application/json").asJson();
 
 		} catch (UnirestException e) {
 			e.printStackTrace();
@@ -48,7 +48,6 @@ public class MadLibThread extends Thread {
 					.getJSONObject(i).getString("partOfSpeech");
 			if (stringResponse.equalsIgnoreCase(partOfSpeech)) {
 				found = true;
-				System.out.println(stringResponse);
 				break;
 
 			}
@@ -64,9 +63,7 @@ public class MadLibThread extends Thread {
 
 	public static void main(String[] args) throws IOException {
 
-		new MadLibThread("lightly", "adverb", new UIJFrame("How to Wash Your Face.txt", "madLibAdviceFromDad.jpeg"))
-				.start();
+		new MadLibThread("run", "verb", new UIJFrame("How to Wash Your Face.txt", "madLibAdviceFromDad.jpeg")).start();
 
 	}
-
 }

@@ -20,6 +20,7 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -47,6 +48,8 @@ public class UIJFrame extends JFrame {
 	private MadLibThread thread;
 	private RandomThread randomThread;
 	private int counter = 0;
+
+	// private JTextField field;
 
 	public UIJFrame(String filename, String imageURL) throws IOException {
 
@@ -99,8 +102,7 @@ public class UIJFrame extends JFrame {
 		layout.setVerticalGroup(vGroup);
 
 		this.image = imageURL;
-		this.labels = new ArrayList<JLabel>();
-		this.texts = new ArrayList<JTextField>();
+
 		this.label = new JLabel("Fill out the text boxes below with the appropriate information: ");
 		this.label.setBackground(Color.decode("#8C489F"));
 		this.label.setOpaque(true);
@@ -127,6 +129,9 @@ public class UIJFrame extends JFrame {
 		south.add(submit);
 		south.add(randomButton);
 
+		labels = new ArrayList<JLabel>();
+		texts = new ArrayList<JTextField>();
+
 		readFile(fileName);
 
 		int p = GroupLayout.PREFERRED_SIZE;
@@ -141,18 +146,17 @@ public class UIJFrame extends JFrame {
 			field.setBackground(Color.decode("#EC799A"));
 			field.setForeground(Color.decode("#9F0251"));
 			field.setFont(font);
-			field.setPreferredSize(new Dimension(150, 25));
-			texts.add(field);
+			field.setPreferredSize(new Dimension(200, 25));
 
+			texts.add(field);
 			field.addFocusListener(new FocusListener() {
 
 				public void focusGained(FocusEvent e) {
 
-					field.setEditable(true);
 				}
 
 				public void focusLost(FocusEvent e) {
-					field.setEditable(false);
+
 					if (!field.getText().equalsIgnoreCase("")) {
 						words.add(field.getText());
 					}
@@ -162,10 +166,9 @@ public class UIJFrame extends JFrame {
 							filteredWords.add(field.getText());
 							// index.add(counter);
 
-							threadCall(field.getText(), speech);
+							threadCall(field.getText().toLowerCase(), speech.toLowerCase());
 						}
 					}
-
 				}
 			});
 
@@ -277,7 +280,8 @@ public class UIJFrame extends JFrame {
 			try {
 				throw new NotEqualsException();
 			} catch (NotEqualsException e) {
-				System.out.println("Word entered is not the correct part of speech. Please Try again!");
+				JOptionPane
+				.showMessageDialog(null, "Word entered is not the correct part of speech. Please Try again!");
 				e.printStackTrace();
 			}
 		}
