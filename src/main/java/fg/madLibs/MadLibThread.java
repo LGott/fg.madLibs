@@ -41,12 +41,8 @@ public class MadLibThread extends Thread {
 			e.printStackTrace();
 		}
 
-<<<<<<< HEAD
 		int size = response.getBody().getArray().getJSONObject(0)
 				.getJSONArray("definitions").length();
-=======
-		int size = response.getBody().getArray().getJSONObject(0).getJSONArray("definitions").length();
->>>>>>> 649b30ad9fe31e3c272c7d31b1958eb6f9d58516
 
 		boolean found = false;
 
@@ -70,12 +66,8 @@ public class MadLibThread extends Thread {
 	}
 
 	public static void main(String[] args) throws IOException {
-<<<<<<< HEAD
-		new MadLibThread("lightly", "adverb", new UIJFrame(
-				"How To Wash Your Face.txt", "AdviceFromDadImage.jpeg"));
-=======
-		new MadLibThread("lightly", "adverb", new UIJFrame("How to Wash Your Face.txt", "madLibAdviceFromDad.jpeg"));
->>>>>>> 649b30ad9fe31e3c272c7d31b1958eb6f9d58516
-	}
 
+		new MadLibThread("lightly", "adverb", new UIJFrame(
+				"How to Wash Your Face.txt", "madLibAdviceFromDad.jpeg"));
+	}
 }

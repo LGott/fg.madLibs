@@ -164,7 +164,7 @@ public class UIJFrame extends JFrame {
 						if (speech.equalsIgnoreCase(pos.name())) {
 							filtered.add(speech);
 							filteredWords.add(field.getText());
-							index.add(counter);
+							//index.add(counter);
 
 							// threadCall(field.getText(), speech);
 						}
