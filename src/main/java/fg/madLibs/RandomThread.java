@@ -70,7 +70,7 @@ public class RandomThread extends Thread {
 			}
 
 		}
-		// frame.addRandomWords(word);
-		// }
+		
+		frame.addRandomWords(word, index);
 	}
 }
