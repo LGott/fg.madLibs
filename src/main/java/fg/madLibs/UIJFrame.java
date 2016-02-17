@@ -208,6 +208,7 @@ public class UIJFrame extends JFrame {
 		randomButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
+
 				// field.setText("Hello");
 				// texts.set(0, field);
 				filterArray();

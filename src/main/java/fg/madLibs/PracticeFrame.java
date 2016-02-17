@@ -25,7 +25,7 @@ public class PracticeFrame extends JFrame {
 		
 		JTextArea area = new JTextArea("Hello");
 		area.setBounds(300,300,300,300);
-		area.setBackground();
+		//area.setBackground();
 		add(area);
 		container.add(label);
 		

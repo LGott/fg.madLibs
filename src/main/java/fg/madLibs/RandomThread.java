@@ -15,7 +15,6 @@ public class RandomThread extends Thread {
 	private String pos;
 	private HttpResponse<JsonNode> response = null;
 	private UIJFrame frame;
-	private ArrayList<String> test;
 	private String word;
 	private ArrayList<JTextField> texts;
 	private int index;
@@ -25,7 +24,6 @@ public class RandomThread extends Thread {
 
 		this.pos = pos;
 		this.frame = frame;
-		test = new ArrayList<String>();
 		this.texts = fields;
 		this.index = index;
 		this.field = field;
@@ -58,6 +56,14 @@ public class RandomThread extends Thread {
 		// for (int i = 0; i < texts.size(); i++) {
 
 		texts.set(index, field);
+
+		for (int i = 0; i < texts.size(); i++) {
+			if (texts.get(i).getText().equals("")) {
+				texts.get(i).setText("Cannot Randomize!");
+
+			}
+
+		}
 		// frame.addRandomWords(word);
 		// }
 	}
