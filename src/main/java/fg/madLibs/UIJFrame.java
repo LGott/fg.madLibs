@@ -47,7 +47,6 @@ public class UIJFrame extends JFrame {
 	private MadLibThread thread;
 	private RandomThread randomThread;
 	private int counter = 0;
-	private JTextField field;
 
 	public UIJFrame(String filename, String imageURL) throws IOException {
 
@@ -128,9 +127,6 @@ public class UIJFrame extends JFrame {
 		south.add(submit);
 		south.add(randomButton);
 
-		labels = new ArrayList<JLabel>();
-		texts = new ArrayList<JTextField>();
-
 		readFile(fileName);
 
 		int p = GroupLayout.PREFERRED_SIZE;
@@ -141,7 +137,7 @@ public class UIJFrame extends JFrame {
 			label.setForeground(Color.decode("#EC799A"));
 			label.setFont(font);
 			labels.add(label);
-			field = new JTextField("");
+			final JTextField field = new JTextField("");
 			field.setBackground(Color.decode("#EC799A"));
 			field.setForeground(Color.decode("#9F0251"));
 			field.setFont(font);
