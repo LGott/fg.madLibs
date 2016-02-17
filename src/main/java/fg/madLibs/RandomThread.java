@@ -1,5 +1,6 @@
 package fg.madLibs;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -27,6 +28,7 @@ public class RandomThread extends Thread {
 		this.texts = fields;
 		this.index = index;
 		this.field = field;
+
 	}
 
 	@Override
@@ -53,9 +55,15 @@ public class RandomThread extends Thread {
 		System.out.println(word); // For testing purposes
 
 		field.setText(word);
+		field.setEditable(false);
+		field.setEnabled(false);
+		field.setDisabledTextColor(Color.GRAY);
 		// for (int i = 0; i < texts.size(); i++) {
 
 		texts.set(index, field);
+		// words.add(word);
+		frame.addRandomWords(word, index);
+		// System.out.println(words);
 
 		for (int i = 0; i < texts.size(); i++) {
 			if (texts.get(i).getText().equals("")) {

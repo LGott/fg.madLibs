@@ -148,6 +148,8 @@ public class UIJFrame extends JFrame {
 			field.setFont(font);
 			field.setPreferredSize(new Dimension(200, 25));
 
+			field.setEnabled(false);
+
 			texts.add(field);
 			field.addFocusListener(new FocusListener() {
 
@@ -209,11 +211,14 @@ public class UIJFrame extends JFrame {
 
 				try {
 					randomThreadCall();
+					displayRandom();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 
-				displayRandom();
+				// displayRandom();
+				// displayText();
+
 				// System.out.println(randomWords);
 
 			}
@@ -248,9 +253,28 @@ public class UIJFrame extends JFrame {
 
 	}
 
-	public void addRandomWords(String word) {
+	public void displayRandomText() {
 
-		filteredWords.add(word);
+		for (int i = 0; i < texts.size(); i++) {
+			texts.get(i).setEnabled(true);
+
+		}
+
+		for (int i = 0; i < texts.size(); i++) {
+			if (texts.get(i).getText().equals("Cannot Randomize")) {
+
+				words.set(i, "hello");
+			}
+		}
+
+		System.out.println(words);
+	}
+
+	public void addRandomWords(String word, int index) {
+
+		words.set(index, word);
+		System.out.println(words.toString());
+		displayRandomText();
 
 	}
 
@@ -269,10 +293,11 @@ public class UIJFrame extends JFrame {
 					.get(i)));
 
 			randomThread.start();
-
+			// words.add(texts.get(i).getText());
 		}
 
-		System.out.println(filteredWords);
+		// System.out.println(filteredWords);
+		System.out.println(words);
 	}
 
 	public void checkWord(boolean found) throws NotEqualsException {
@@ -308,15 +333,27 @@ public class UIJFrame extends JFrame {
 		System.out.println(filtered.toString());
 		System.out.println(filteredWords.toString());
 		System.out.println(index);
+
 	}
 
 	public void displayRandom() {
 
+		for (int i = 0; i < texts.size(); i++) {
+			words.add("");
+		}
 		// System.out.println(randoms);
-		System.out.println(filteredWords);
+		// System.out.println(filteredWords);
 		// for (int i = 0; i < index.size(); i++) {
 		// texts.set(index.get(i), new JTextField(randomWords.get(i)));
 		// }
+
+		// for (int i = 0; i < texts.size(); i++) {
+		// words.add(texts.get(i).getText());
+		// }
+		// for (int i = 0; i < texts.size(); i++) {
+		// words.set(i, texts.get(i).getText());
+		// }
+		System.out.println(words);
 	}
 
 	public static void main(String[] args) throws IOException {
