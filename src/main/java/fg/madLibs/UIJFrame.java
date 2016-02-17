@@ -149,8 +149,8 @@ public class UIJFrame extends JFrame {
 			field.setForeground(Color.decode("#9F0251"));
 			field.setFont(font);
 			field.setPreferredSize(new Dimension(200, 25));
-			
-
+			field.setEnabled(false);
+			texts.add(field);
 			field.addFocusListener(new FocusListener() {
 
 				public void focusGained(FocusEvent e) {
@@ -158,7 +158,7 @@ public class UIJFrame extends JFrame {
 				}
 
 				public void focusLost(FocusEvent e) {
-					
+					//field.setEnabled(true);
 					if (!field.getText().equalsIgnoreCase("")) {
 						words.add(field.getText());
 					}
@@ -175,7 +175,7 @@ public class UIJFrame extends JFrame {
 				}
 			});
 			
-			texts.add(field);
+			
 
 		}
 
@@ -219,7 +219,9 @@ public class UIJFrame extends JFrame {
 					e1.printStackTrace();
 				}
 
-				displayRandom();
+				//displayRandom();
+				//displayText();
+				
 				// System.out.println(randomWords);
 
 			}
@@ -278,6 +280,8 @@ public class UIJFrame extends JFrame {
 			randomThread.start();
 
 		}
+		
+		
 
 		System.out.println(filteredWords);
 	}
@@ -318,12 +322,17 @@ public class UIJFrame extends JFrame {
 	}
 
 	public void displayRandom() {
-
+		
 		// System.out.println(randoms);
-		System.out.println(filteredWords);
+		//System.out.println(filteredWords);
 		// for (int i = 0; i < index.size(); i++) {
 		// texts.set(index.get(i), new JTextField(randomWords.get(i)));
 		// }
+		
+		for(int i = 0; i < texts.size(); i++){
+			words.set(i, texts.get(i).getText());
+		}
+		System.out.println(words);
 	}
 
 	public static void main(String[] args) throws IOException {

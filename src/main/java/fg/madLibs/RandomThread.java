@@ -1,9 +1,11 @@
 package fg.madLibs;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
@@ -52,7 +54,11 @@ public class RandomThread extends Thread {
 		word = response.getBody().getObject().getJSONObject("results").getJSONArray("data").get(0).toString();
 		System.out.println(word); // For testing purposes
 
+		
 		field.setText(word);
+		field.setEditable(false);
+		field.setEnabled(false);
+		field.setDisabledTextColor(Color.GRAY);
 		// for (int i = 0; i < texts.size(); i++) {
 
 		texts.set(index, field);

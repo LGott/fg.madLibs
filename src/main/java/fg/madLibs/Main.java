@@ -35,7 +35,7 @@ public class Main {
 
 		StringBuilder builder2 = new StringBuilder();
 		builder2.append("https://wordsapiv1.p.mashape.com/words/");
-		builder2.append("run");
+		builder2.append("late");
 		builder2.append("/definitions");
 
 		HttpResponse<JsonNode> response2 = null;
@@ -68,8 +68,7 @@ public class Main {
 		}
 		*/
 		
-		String res = response2.getBody().getArray().getJSONObject(0)
-				.getJSONArray("definitions").getJSONObject(0).getString("partOfSpeech");
+		String res = response2.getBody().toString();
 		System.out.println(res);
 		
 		//System.out.println(stringResponse);
