@@ -9,9 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextArea;
-import javax.swing.UIManager;
 
 public class DisplayFrame extends JFrame {
 
@@ -23,8 +21,7 @@ public class DisplayFrame extends JFrame {
 	private ImageIcon icon;
 	private ArrayList<String> words;
 
-	public DisplayFrame(ArrayList<String> file, ArrayList<String> words,
-			String imageURL) {
+	public DisplayFrame(ArrayList<String> file, ArrayList<String> words, String imageURL) {
 
 		this.file = file;
 		this.icon = new ImageIcon(imageURL);
@@ -33,24 +30,21 @@ public class DisplayFrame extends JFrame {
 		setTitle("MadLibs");
 		setSize(700, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
 
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
 
 		DisplayPanel panel = new DisplayPanel("AdviceFromDadImage.jpeg");
-		
+
 		Graphics g = panel.getImage().getGraphics();
-		
-		
-		
-		
+
 		container.add(panel, BorderLayout.CENTER);
 
 		JTextArea backgroundArea = new JTextArea();
 		backgroundArea.setLineWrap(true);
 		backgroundArea.setWrapStyleWord(true);
-		
-		
+
 		int counter = 0;
 		for (int i = 0; i < file.size(); i++) {
 			if (file.get(i).equals(";")) {
@@ -62,13 +56,12 @@ public class DisplayFrame extends JFrame {
 
 		Font font = new Font("Type Embellishments One LET", Font.BOLD, 18);
 
-		String fileString = this.file.toString().replace(",", " ")
-				.replace("[", "").replace("]", "").trim();
-		
-		//g.drawString("Hello", 100,100);
+		String fileString = this.file.toString().replace(",", " ").replace("[", "").replace("]", "").trim();
+
+		// g.drawString("Hello", 100,100);
 
 		backgroundArea.setText(fileString);
-		//backgroundArea.setBackground(c);
+		// backgroundArea.setBackground(c);
 		backgroundArea.setForeground(Color.YELLOW);
 		backgroundArea.setFont(font);
 
@@ -87,8 +80,7 @@ public class DisplayFrame extends JFrame {
 		array.add("how");
 		array.add("are you");
 
-		new DisplayFrame(array, array, "AdviceFromDadImage.jpeg")
-				.setVisible(true);
+		new DisplayFrame(array, array, "AdviceFromDadImage.jpeg").setVisible(true);
 	}
 
 }

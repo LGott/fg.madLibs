@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class UIJFrame extends JFrame {
 
@@ -49,13 +51,17 @@ public class UIJFrame extends JFrame {
 	private RandomThread randomThread;
 	private int counter = 0;
 
+	private JLabel imageLabel;
+	private JButton enterButton;
+
 	// private JTextField field;
 
 	public UIJFrame(String filename, String imageURL) throws IOException {
 
 		setTitle("MadLibs");
-		setSize(700, 600);
+		setSize(600, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
 
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
@@ -65,11 +71,18 @@ public class UIJFrame extends JFrame {
 
 		JPanel north = new JPanel();
 		north.setBackground(Color.decode("#8C489F"));
+		north.setLayout(new BorderLayout());
 		container.add(north, BorderLayout.NORTH);
+
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 3));
+		buttonPanel.setBackground(Color.decode("#8C489F"));
+
+		north.add(buttonPanel, BorderLayout.SOUTH);
 
 		JPanel south = new JPanel();
 		south.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 3));
-		south.setBackground((Color.decode("#9F0251")));
+		south.setBackground(Color.decode("#8C489F"));
 
 		container.add(south, BorderLayout.SOUTH);
 
@@ -103,12 +116,19 @@ public class UIJFrame extends JFrame {
 
 		this.image = imageURL;
 
-		this.label = new JLabel("Fill out the text boxes below with the appropriate information: ");
+		// this.label = new
+		// JLabel("Fill out the text boxes below with the appropriate information: ");
+
+		this.label = new JLabel("Click a button to choose which way you want to play: ", SwingConstants.CENTER);
+
 		this.label.setBackground(Color.decode("#8C489F"));
 		this.label.setOpaque(true);
 		this.label.setForeground(Color.decode("#C3C3E5"));
 		this.label.setFont(font);
-		north.add(label);
+
+		this.imageLabel = new JLabel(new ImageIcon("pink logo.jpg"));
+		north.add(label, BorderLayout.CENTER);
+		north.add(imageLabel, BorderLayout.NORTH);
 
 		this.fileName = filename;
 		this.submit = new JButton("Display the story!");
@@ -126,8 +146,15 @@ public class UIJFrame extends JFrame {
 		this.randomButton.setForeground(Color.decode("#CBFFFA"));
 		this.randomButton.setFont(font);
 
+		this.enterButton = new JButton("Enter info myself!!");
+		this.enterButton.setBackground(Color.decode("#177F75"));
+		this.enterButton.setForeground(Color.decode("#CBFFFA"));
+		this.enterButton.setFont(font);
+
 		south.add(submit);
-		south.add(randomButton);
+
+		buttonPanel.add(randomButton);
+		buttonPanel.add(enterButton);
 
 		labels = new ArrayList<JLabel>();
 		texts = new ArrayList<JTextField>();
@@ -166,7 +193,7 @@ public class UIJFrame extends JFrame {
 						if (speech.equalsIgnoreCase(pos.name())) {
 							filtered.add(speech);
 							filteredWords.add(field.getText());
-							// index.add(counter);
+							index.add(counter);
 
 							threadCall(field.getText().toLowerCase(), speech.toLowerCase());
 						}
@@ -201,6 +228,16 @@ public class UIJFrame extends JFrame {
 
 		});
 
+		enterButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				for (int i = 0; i < texts.size(); i++) {
+					texts.get(i).setEnabled(true);
+				}
+			}
+
+		});
+
 		randomButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -220,6 +257,9 @@ public class UIJFrame extends JFrame {
 				// displayText();
 
 				// System.out.println(randomWords);
+
+				displayRandom();
+				// displayText();
 
 			}
 		});
@@ -257,16 +297,13 @@ public class UIJFrame extends JFrame {
 
 		for (int i = 0; i < texts.size(); i++) {
 			texts.get(i).setEnabled(true);
-
 		}
-
 		for (int i = 0; i < texts.size(); i++) {
 			if (texts.get(i).getText().equals("Cannot Randomize")) {
 
 				words.set(i, "hello");
 			}
 		}
-
 		System.out.println(words);
 	}
 
@@ -275,7 +312,6 @@ public class UIJFrame extends JFrame {
 		words.set(index, word);
 		System.out.println(words.toString());
 		displayRandomText();
-
 	}
 
 	public void threadCall(String word, String partOfSpeech) {
@@ -293,11 +329,10 @@ public class UIJFrame extends JFrame {
 					.get(i)));
 
 			randomThread.start();
+
 			// words.add(texts.get(i).getText());
 		}
 
-		// System.out.println(filteredWords);
-		System.out.println(words);
 	}
 
 	public void checkWord(boolean found) throws NotEqualsException {
@@ -354,6 +389,9 @@ public class UIJFrame extends JFrame {
 		// words.set(i, texts.get(i).getText());
 		// }
 		System.out.println(words);
+		System.out.println(words.toString());
+		System.out.println(filteredWords.toString());
+
 	}
 
 	public static void main(String[] args) throws IOException {
