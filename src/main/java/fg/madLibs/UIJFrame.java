@@ -8,8 +8,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -148,30 +146,24 @@ public class UIJFrame extends JFrame {
 			field.setPreferredSize(new Dimension(150, 25));
 			texts.add(field);
 
-			field.addFocusListener(new FocusListener() {
-
-				public void focusGained(FocusEvent e) {
-
-					field.setEditable(true);
-				}
-
-				public void focusLost(FocusEvent e) {
-					field.setEditable(false);
-					if (!field.getText().equalsIgnoreCase("")) {
-						words.add(field.getText());
-					}
-					for (PartsOfSpeech pos : PartsOfSpeech.values()) {
-						if (speech.equalsIgnoreCase(pos.name())) {
-							filtered.add(speech);
-							filteredWords.add(field.getText());
-							// index.add(counter);
-
-							// threadCall(field.getText(), speech);
-						}
-					}
-
-				}
-			});
+			/*
+			 * field.addFocusListener(new FocusListener() {
+			 * 
+			 * public void focusGained(FocusEvent e) {
+			 * 
+			 * field.setEditable(true); }
+			 * 
+			 * public void focusLost(FocusEvent e) { field.setEditable(false);
+			 * if (!field.getText().equalsIgnoreCase("")) {
+			 * words.add(field.getText()); } for (PartsOfSpeech pos :
+			 * PartsOfSpeech.values()) { if
+			 * (speech.equalsIgnoreCase(pos.name())) { filtered.add(speech);
+			 * filteredWords.add(field.getText()); // index.add(counter);
+			 * 
+			 * // threadCall(field.getText(), speech); } }
+			 * 
+			 * } });
+			 */
 		}
 
 		for (JLabel label : labels) {
