@@ -76,7 +76,8 @@ public class MadLibJFrame extends JFrame {
 		submit = new JButton("Submit");
 		buttonPanel.add(submit, BorderLayout.SOUTH);
 
-		String[] options = { "Advice from Dad", "Interview", "How To Wash Your Face", "Vacation", "A Familiar Story", "Clinton Against Obama" };
+		String[] options = { "Advice from Dad", "Interview", "How To Wash Your Face", "Vacation", "A Familiar Story",
+				"Clinton Against Obama" };
 
 		box = new JComboBox<String>(options);
 		box.setBackground(Color.BLACK);
@@ -113,45 +114,36 @@ public class MadLibJFrame extends JFrame {
 				case 0:
 
 					story = "Mad Lib Advice From Dad.txt";
-					imageURL = "AdviceFromDadImage.jpeg";
 
 					break;
 				case 1:
 
 					story = "Mad Lib Job Interview.txt";
-					imageURL = "MadLib1.png";
 
 					break;
 
 				case 2:
 
 					story = "How To Wash Your Face.txt";
-					imageURL = "MadLib2.png";
 
 					break;
 
 				case 3:
 
 					story = "Vacation.txt";
-					imageURL = "MadLib3.png";
-
 					break;
-					
-				case 4: 
-					story = "A Familiar Story.txt";
-					imageURL = "AdviceFromDadImage.jpeg";
 
-				break;
-				
-				case 5: 
+				case 4:
+					story = "A Familiar Story.txt";
+					break;
+
+				case 5:
 					story = "Clinton Against Obama.txt";
-					imageURL = "AdviceFromDadImage.jpeg";
-						
 					break;
 				}
 
 				try {
-					new UIJFrame(story, imageURL).setVisible(true);
+					new UIJFrame(story).setVisible(true);
 					dispose();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -165,4 +157,3 @@ public class MadLibJFrame extends JFrame {
 	}
 
 }
-

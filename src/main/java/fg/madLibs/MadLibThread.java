@@ -33,29 +33,27 @@ public class MadLibThread extends Thread {
 		HttpResponse<JsonNode> response = null;
 
 		try {
-			response = Unirest
-					.get(builder.toString())
-					.header("X-Mashape-Key",
-							"LsvNmn9sVvmshJNr08Cav83z1Eovp1BNciPjsnA0yzYSlgfJOE")
+			response = Unirest.get(builder.toString())
+					.header("X-Mashape-Key", "LsvNmn9sVvmshJNr08Cav83z1Eovp1BNciPjsnA0yzYSlgfJOE")
 					.header("Accept", "application/json").asJson();
 
 		} catch (UnirestException e) {
 			e.printStackTrace();
+		} catch (org.json.JSONException e2) {
+			JOptionPane.showMessageDialog(null, "Invalid Word Entered");
 		}
 		int size = 0;
-		try{
-		size = response.getBody().getArray().getJSONObject(0)
-				.getJSONArray("definitions").length();
-		} catch(NullPointerException e){
-			
+		try {
+			size = response.getBody().getArray().getJSONObject(0).getJSONArray("definitions").length();
+		} catch (NullPointerException e) {
+
 		}
 
 		boolean found = false;
 
 		for (int i = 0; i < size; i++) {
-			stringResponse = response.getBody().getArray().getJSONObject(0)
-					.getJSONArray("definitions").getJSONObject(i)
-					.getString("partOfSpeech");
+			stringResponse = response.getBody().getArray().getJSONObject(0).getJSONArray("definitions")
+					.getJSONObject(i).getString("partOfSpeech");
 
 			if (stringResponse.equalsIgnoreCase(partOfSpeech)) {
 				found = true;
@@ -75,8 +73,6 @@ public class MadLibThread extends Thread {
 
 	public static void main(String[] args) throws IOException {
 
-		new MadLibThread("run", "verb", new UIJFrame(
-				"How to Wash Your Face.txt", "madLibAdviceFromDad.jpeg"))
-				.start();
+		new MadLibThread("run", "verb", new UIJFrame("How to Wash Your Face.txt")).start();
 	}
 }

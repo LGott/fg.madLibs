@@ -63,7 +63,7 @@ public class UIJFrame extends JFrame {
 	private JButton enterButton;
 	private String title;
 
-	public UIJFrame(String filename, String imageURL) throws IOException {
+	public UIJFrame(String filename) throws IOException {
 
 		setTitle("MadLibs");
 		setSize(600, 700);
@@ -118,7 +118,6 @@ public class UIJFrame extends JFrame {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 		layout.setVerticalGroup(vGroup);
 
-		this.image = imageURL;
 		this.label = new JLabel("Click a button to choose which way you want to play: ", SwingConstants.CENTER);
 		this.label.setBackground(Color.decode("#8C489F"));
 		this.label.setOpaque(true);
@@ -178,7 +177,9 @@ public class UIJFrame extends JFrame {
 			field.addFocusListener(new FocusListener() {
 
 				public void focusGained(FocusEvent e) {
-
+					if (field.getText().equals("Enter Word")) {
+						field.setText("");
+					}
 				}
 
 				public void focusLost(FocusEvent e) {
@@ -191,23 +192,18 @@ public class UIJFrame extends JFrame {
 								if (!field.getText().equals("Enter Word")) {
 
 									words.set(userIndex.get(i - 1), field.getText());
-
 								}
-
 								break;
 							}
 							words.set(words.size() - 1, texts.get(texts.size() - 1).getText());
 						}
 					}
 
-					System.out.println(words.toString());
-
 					if (placeHolder <= filtered.size()) {
 						if (!field.getText().equalsIgnoreCase("")) {
 							words.add(field.getText());
 						}
 
-						System.out.println(words.toString());
 						for (PartsOfSpeech pos : PartsOfSpeech.values()) {
 							if (speech.equalsIgnoreCase(pos.name())) {
 								filtered.add(speech);
@@ -216,11 +212,9 @@ public class UIJFrame extends JFrame {
 								index.add(counter);
 
 								threadCall(field.getText().toLowerCase(), speech.toLowerCase());
-
 							}
 						}
 					}
-
 				}
 			});
 
@@ -246,7 +240,6 @@ public class UIJFrame extends JFrame {
 				dispose();
 
 				new DisplayFrame(textFile, words, image, title).setVisible(true);
-
 			}
 		});
 
@@ -271,7 +264,7 @@ public class UIJFrame extends JFrame {
 				try {
 
 					randomThreadCall();
-					displayRandom();
+					initializeArray();
 
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -284,7 +277,7 @@ public class UIJFrame extends JFrame {
 			}
 		});
 
-		InputStream in = new FileInputStream("Ring08.wav");
+		InputStream in = new FileInputStream("music.wav");
 
 		AudioStream music = new AudioStream(in);
 
@@ -305,6 +298,7 @@ public class UIJFrame extends JFrame {
 			String line1 = file.next();
 			textFile.add(line1);
 		}
+		file.close();
 	}
 
 	public void displayText() {
@@ -330,10 +324,9 @@ public class UIJFrame extends JFrame {
 
 				for (int i = 0; i < (texts.size()); i++) {
 					if (texts.get(i).isEnabled() == true) {
-						texts.get(i).setText("Enter Word:");
+						texts.get(i).setText("Enter Word");
 					}
 				}
-
 			}
 		}
 
@@ -344,7 +337,6 @@ public class UIJFrame extends JFrame {
 			final JTextField field = texts.get(i);
 			field.setEnabled(true);
 			placeHolder = 100; // set a high number
-
 		}
 
 	}
@@ -380,7 +372,7 @@ public class UIJFrame extends JFrame {
 				throw new NotEqualsException();
 			} catch (NotEqualsException e) {
 				JOptionPane
-				.showMessageDialog(null, "Word entered is not the correct part of speech. Please Try again!");
+						.showMessageDialog(null, "Word entered is not the correct part of speech. Please Try again!");
 
 			} catch (NullPointerException e) {
 
@@ -411,28 +403,18 @@ public class UIJFrame extends JFrame {
 				userIndex.add(i);
 			}
 		}
-
-		System.out.println(filtered);
-		System.out.println(filteredWords);
-		System.out.println(index);
-		System.out.println(userIndex);
-
 	}
 
-	public void displayRandom() {
+	public void initializeArray() {
 
 		for (int i = 0; i < texts.size(); i++) {
 			words.add("");
 		}
-
-		System.out.println(words);
-		System.out.println(words.toString());
-
 	}
 
 	public static void main(String[] args) throws IOException {
 
-		new UIJFrame("Mad Lib Job Interview.txt", "AdviceFromDadImage.jpeg").setVisible(true);
+		new UIJFrame("How to Wash Your Face.txt").setVisible(true);
 
 	}
 }

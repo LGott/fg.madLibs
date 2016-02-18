@@ -46,7 +46,7 @@ public class PlayGame extends JFrame {
 
 		container.add(button, BorderLayout.SOUTH);
 
-		InputStream in = new FileInputStream("Ring08.wav");
+		InputStream in = new FileInputStream("music.wav");
 
 		AudioStream music = new AudioStream(in);
 

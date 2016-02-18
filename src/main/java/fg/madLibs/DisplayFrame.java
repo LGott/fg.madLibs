@@ -3,14 +3,14 @@ package fg.madLibs;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class DisplayFrame extends JFrame {
@@ -20,13 +20,11 @@ public class DisplayFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private ArrayList<String> file;
-	private ImageIcon icon;
 	private ArrayList<String> words;
 
 	public DisplayFrame(ArrayList<String> file, ArrayList<String> words, String imageURL, String title) {
 
 		this.file = file;
-		this.icon = new ImageIcon(imageURL);
 		this.words = words;
 
 		setTitle("MadLibs");
@@ -38,16 +36,28 @@ public class DisplayFrame extends JFrame {
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
 
-		DisplayPanel panel = new DisplayPanel(imageURL);
+		JPanel topPanel = new JPanel();
+		topPanel.setLayout(new BorderLayout());
 
-		
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BorderLayout());
 
-		container.add(panel, BorderLayout.CENTER);
+		JPanel southPanel = new JPanel();
+		southPanel.setLayout(new BorderLayout());
 
+		container.add(topPanel, BorderLayout.NORTH);
+		container.add(mainPanel, BorderLayout.CENTER);
+		container.add(southPanel, BorderLayout.SOUTH);
+
+		ImageIcon icon = new ImageIcon("./logo.png");
 		JLabel label = new JLabel();
-		
-		
-				
+		label.setIcon(icon);
+		topPanel.add(label);
+
+		JLabel southLabel = new JLabel();
+		southLabel.setIcon(icon);
+		southPanel.add(southLabel);
+
 		JTextArea backgroundArea = new JTextArea();
 		backgroundArea.setLineWrap(true);
 		backgroundArea.setWrapStyleWord(true);
@@ -61,45 +71,20 @@ public class DisplayFrame extends JFrame {
 
 		}
 
-		
-		
 		Font font = new Font("Type Embellishments One LET", Font.BOLD, 18);
 
 		String fileString = this.file.toString().replace(",", " ").replace("[", "").replace("]", "").trim();
 
-		StringBuilder builder = new StringBuilder("<html>");
-		builder.append(fileString);
-		builder.append("</html>");
-		
-		
-		label.setText(builder.toString());
-		label.setFont(font);
-		label.setPreferredSize(new Dimension(640,480));
-		panel.add(label, BorderLayout.NORTH);
-
-		// g.drawString("Hello", 100,100);
-
 		backgroundArea.setText(title + "\n" + fileString);
-		// backgroundArea.setBackground(c);
-		backgroundArea.setForeground(Color.YELLOW);
+		backgroundArea.setBackground(Color.BLACK);
+		backgroundArea.setForeground(Color.WHITE);
 		backgroundArea.setFont(font);
+		backgroundArea.setEditable(false);
 
-	//	add(backgroundArea, BorderLayout.CENTER);
+		JScrollPane scroll = new JScrollPane(backgroundArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		mainPanel.add(scroll);
 
-	}
-
-	public static void main(String[] args) {
-		ArrayList<String> array = new ArrayList<String>();
-
-		array.add("hello");
-		array.add("hello");
-		array.add("hello");
-		array.add("hello");
-		array.add("hello");
-		array.add("how");
-		array.add("are you");
-
-		new DisplayFrame(array, array, "AdviceFromDadImage.jpeg", "title").setVisible(true);
 	}
 
 }
