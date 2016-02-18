@@ -15,6 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -147,6 +149,7 @@ public class UIJFrame extends JFrame {
 		this.randomButton.setForeground(Color.decode("#CBFFFA"));
 		this.randomButton.setFont(font);
 
+
 		this.enterButton = new JButton("Enter info myself!!");
 		this.enterButton.setBackground(Color.decode("#421C52"));
 		this.enterButton.setForeground(Color.decode("#CBFFFA"));
@@ -249,23 +252,20 @@ public class UIJFrame extends JFrame {
 				filterArray();
 
 				try {
+
 					randomThreadCall();
+
+					// Thread.sleep(1000);
 					displayRandom();
 				} catch (IOException e1) {
 					e1.printStackTrace();
-				}
-
-				/*
-				try {
-					randomThread.wait();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				*/
+
 				displayRandom();
-				
-				//randomThread.notify();
+
 				displayRandomText();
 				// displayText();
 				
@@ -305,14 +305,43 @@ public class UIJFrame extends JFrame {
 
 	public void displayRandomText() {
 
+		class DelayTask extends TimerTask {
+			@Override
+			public void run() {
+				JOptionPane.showMessageDialog(null,
+						"Not all words can be Randomized!\n Please fill in the remaining text boxes :)");
+			}
+		}
+
+		new Timer().schedule(new DelayTask(), 5200);
+
 		for (int i = 0; i < texts.size(); i++) {
 			texts.get(i).setEnabled(true);
 			
 		}
+
 		for (int i = 0; i < texts.size(); i++) {
 			if (texts.get(i).isEnabled() == true){
 				texts.get(i).setText(" ");
-				words.set(i, "hello");
+				words.set(i, texts.get(i).getText());
+			}
+		}
+			
+
+		class DelayDisplay extends TimerTask {
+			@Override
+			public void run() {
+
+				for (int i = 0; i < texts.size(); i++) {
+					if (texts.get(i).isEnabled() == true) {
+						// texts.get(i).setText("");
+						words.add(i, texts.get(i).getText());
+
+					}
+				}
+				// }
+
+				new Timer().schedule(new DelayDisplay(), 5200);
 			}
 		}
 		System.out.println(words);
@@ -322,7 +351,7 @@ public class UIJFrame extends JFrame {
 
 		words.set(index, word);
 		System.out.println(words.toString());
-		
+
 	}
 
 	public void threadCall(String word, String partOfSpeech) {
@@ -332,7 +361,7 @@ public class UIJFrame extends JFrame {
 
 	}
 
-	public void randomThreadCall() throws IOException {
+	public void randomThreadCall() throws IOException, InterruptedException {
 
 		for (int i = 0; i < filtered.size(); i++) {
 
