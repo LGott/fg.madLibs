@@ -52,6 +52,7 @@ public class UIJFrame extends JFrame {
 	private MadLibThread thread;
 	private RandomThread randomThread;
 	private int counter = 0;
+	private ArrayList<Integer> userIndex;
 
 	private JLabel imageLabel;
 	private JButton enterButton;
@@ -138,6 +139,7 @@ public class UIJFrame extends JFrame {
 		this.submit.setBackground(Color.decode("#421C52"));
 		this.submit.setForeground(Color.decode("#CBFFFA"));
 		this.submit.setFont(font);
+
 		this.filtered = new ArrayList<String>();
 		this.filteredWords = new ArrayList<String>();
 		this.textFile = new ArrayList<String>();
@@ -149,11 +151,12 @@ public class UIJFrame extends JFrame {
 		this.randomButton.setForeground(Color.decode("#CBFFFA"));
 		this.randomButton.setFont(font);
 
-
 		this.enterButton = new JButton("Enter info myself!!");
 		this.enterButton.setBackground(Color.decode("#421C52"));
 		this.enterButton.setForeground(Color.decode("#CBFFFA"));
 		this.enterButton.setFont(font);
+
+		this.userIndex = new ArrayList<Integer>();
 
 		south.add(submit);
 
@@ -190,10 +193,26 @@ public class UIJFrame extends JFrame {
 				}
 
 				public void focusLost(FocusEvent e) {
+					
+					
+					if(userIndex.size() > 0){
+					for (int i = 0; i < userIndex.size(); i++) {
+						if (texts.get(userIndex.get(i)).getText().equals("Enter Word:")) {
 
-					if (!field.getText().equalsIgnoreCase("")) {
-						words.add(field.getText());
+							if(!field.getText().equals("Enter Word:")){
+							words.set(userIndex.get(i-1), field.getText());
+							}
+							break;
+						}
 					}
+					}
+					
+					
+					  if (!field.getText().equalsIgnoreCase("")) {
+						  words.add(field.getText()); 
+					  }
+					 
+					System.out.println(words.toString());
 					for (PartsOfSpeech pos : PartsOfSpeech.values()) {
 						if (speech.equalsIgnoreCase(pos.name())) {
 							filtered.add(speech);
@@ -229,6 +248,7 @@ public class UIJFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				dispose();
+
 				new DisplayFrame(textFile, words, image).setVisible(true);
 
 			}
@@ -238,6 +258,7 @@ public class UIJFrame extends JFrame {
 		enterButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
+				randomButton.setEnabled(false);
 				for (int i = 0; i < texts.size(); i++) {
 					texts.get(i).setEnabled(true);
 				}
@@ -248,6 +269,8 @@ public class UIJFrame extends JFrame {
 		randomButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
+
+				enterButton.setEnabled(false);
 
 				filterArray();
 
@@ -260,15 +283,14 @@ public class UIJFrame extends JFrame {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
 				displayRandom();
 
 				displayRandomText();
+
 				// displayText();
-				
 
 			}
 		});
@@ -308,44 +330,46 @@ public class UIJFrame extends JFrame {
 		class DelayTask extends TimerTask {
 			@Override
 			public void run() {
-				JOptionPane.showMessageDialog(null,
-						"Not all words can be Randomized!\n Please fill in the remaining text boxes :)");
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"Not all words can be Randomized!\n Please fill in the remaining text boxes :)",
+								"MadLibs", JOptionPane.PLAIN_MESSAGE,
+								new ImageIcon("./small icon.png"));
 			}
 		}
 
 		new Timer().schedule(new DelayTask(), 5200);
 
 		for (int i = 0; i < texts.size(); i++) {
-			texts.get(i).setEnabled(true);
-			
+			final JTextField field = texts.get(i);
+			field.setEnabled(true);
+
 		}
 
 		for (int i = 0; i < texts.size(); i++) {
-			if (texts.get(i).isEnabled() == true){
-				texts.get(i).setText(" ");
-				words.set(i, texts.get(i).getText());
+			final JTextField field = texts.get(i);
+			if (texts.get(i).isEnabled() == true) {
+				texts.get(i).setText("Enter Word:");
+				counter = i;
+
 			}
 		}
-			
-
-		class DelayDisplay extends TimerTask {
-			@Override
-			public void run() {
-
-				for (int i = 0; i < texts.size(); i++) {
-					if (texts.get(i).isEnabled() == true) {
-						// texts.get(i).setText("");
-						words.add(i, texts.get(i).getText());
-
-					}
-				}
-				// }
-
-				new Timer().schedule(new DelayDisplay(), 5200);
-			}
-		}
-		System.out.println(words);
 	}
+
+	/*
+	 * class DelayDisplay extends TimerTask {
+	 * 
+	 * @Override public void run() {
+	 * 
+	 * for (int i = 0; i < texts.size(); i++) { if (texts.get(i).isEnabled() ==
+	 * true) { texts.get(i).setText(""); words.set(i, texts.get(i).getText());
+	 * 
+	 * } } // }
+	 * 
+	 * new Timer().schedule(new DelayDisplay(), 5200); } }
+	 * System.out.println(words); }
+	 */
 
 	public void addRandomWords(String word, int index) {
 
@@ -383,7 +407,10 @@ public class UIJFrame extends JFrame {
 				JOptionPane
 						.showMessageDialog(null,
 								"Word entered is not the correct part of speech. Please Try again!");
-				e.printStackTrace();
+			} catch (NullPointerException e){
+				JOptionPane
+				.showMessageDialog(null,
+						"Word entered is not the correct part of speech. Please Try again!");
 			}
 		}
 	}
@@ -405,10 +432,19 @@ public class UIJFrame extends JFrame {
 				}
 			}
 		}
+		
+		//make an index array of all the spots where the not random words will go
+		
+		for (int i = 0; i < partsOfSpeech.length; i++){
+			if(!index.contains(i)){
+				userIndex.add(i);
+			}
+		}
 
 		System.out.println(filtered.toString());
 		System.out.println(filteredWords.toString());
 		System.out.println(index);
+		System.out.println(userIndex);
 
 	}
 
@@ -417,11 +453,9 @@ public class UIJFrame extends JFrame {
 		for (int i = 0; i < texts.size(); i++) {
 			words.add("");
 		}
-	
+
 		System.out.println(words);
 		System.out.println(words.toString());
-
-
 
 	}
 

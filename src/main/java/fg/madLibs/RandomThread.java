@@ -62,13 +62,9 @@ public class RandomThread extends Thread {
 		field.setEditable(false);
 		field.setEnabled(false);
 		field.setDisabledTextColor(Color.GRAY);
-		// for (int i = 0; i < texts.size(); i++) {
 
 		texts.set(index, field);
-		// words.add(word);
 		frame.addRandomWords(word, index);
-		// System.out.println(words);
 
-		frame.addRandomWords(word, index);
 	}
 }

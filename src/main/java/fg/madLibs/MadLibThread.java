@@ -58,6 +58,9 @@ public class MadLibThread extends Thread {
 		} catch (NotEqualsException e) {
 			e.printStackTrace();
 		}
+		catch(NullPointerException e1){
+			
+		}
 
 	}
 
