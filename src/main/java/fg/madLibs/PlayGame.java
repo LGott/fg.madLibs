@@ -6,20 +6,24 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 //import the sun.audio package
 
 public class PlayGame extends JFrame {
 
-	private JPanel topPanel;
-	private JPanel buttonPanel;
-	private JLabel label;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton button;
 
 	public PlayGame() throws IOException {
@@ -43,7 +47,11 @@ public class PlayGame extends JFrame {
 
 		container.add(button, BorderLayout.SOUTH);
 
-		String musicFile = "Ring05.wav";
+		InputStream in = new FileInputStream("Ring08.wav");
+
+		AudioStream music = new AudioStream(in);
+
+		AudioPlayer.player.start(music);
 
 		button.addActionListener(new ActionListener() {
 
