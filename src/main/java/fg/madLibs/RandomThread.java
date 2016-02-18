@@ -29,7 +29,6 @@ public class RandomThread extends Thread {
 		this.texts = fields;
 		this.index = index;
 		this.field = field;
-
 	}
 
 	@Override

@@ -20,6 +20,10 @@ import javax.swing.plaf.basic.BasicComboPopup;
 
 public class MadLibJFrame extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel buttonPanel;
 	private JPanel topPanel;
 	private JLabel iconLabel;
