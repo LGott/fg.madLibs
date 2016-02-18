@@ -63,15 +63,6 @@ public class RandomThread extends Thread {
 		texts.set(index, field);
 		// words.add(word);
 		frame.addRandomWords(word, index);
-		// System.out.println(words);
-
-		// for (int i = 0; i < texts.size(); i++) {
-		// if (texts.get(i).getText().equals("")) {
-		// texts.get(i).setText("Cannot Randomize!");
-
-		// }
-
-		// }
 
 		frame.addRandomWords(word, index);
 	}

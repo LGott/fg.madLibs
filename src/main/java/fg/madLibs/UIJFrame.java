@@ -303,13 +303,6 @@ public class UIJFrame extends JFrame {
 
 	public void displayRandomText() {
 
-		// for (int i = 0; i < texts.size(); i++) {
-		// if (texts.get(i).getText().equals("")) {
-		// texts.get(i).setText("Cannot Randomize!");
-
-		// }
-
-		// }
 		class DelayTask extends TimerTask {
 			@Override
 			public void run() {
@@ -330,17 +323,16 @@ public class UIJFrame extends JFrame {
 
 				for (int i = 0; i < texts.size(); i++) {
 					if (texts.get(i).isEnabled() == true) {
-						// texts.get(i).setText("");
-						words.add(i, texts.get(i).getText());
-
+						texts.get(i).setText("");
+						words.set(i, texts.get(i).getText());
+						System.out.println(words);
 					}
 				}
-				// }
 
 				new Timer().schedule(new DelayDisplay(), 5200);
 			}
 		}
-		System.out.println(words);
+
 	}
 
 	public void addRandomWords(String word, int index) {
@@ -377,7 +369,7 @@ public class UIJFrame extends JFrame {
 				throw new NotEqualsException();
 			} catch (NotEqualsException e) {
 				JOptionPane
-				.showMessageDialog(null, "Word entered is not the correct part of speech. Please Try again!");
+						.showMessageDialog(null, "Word entered is not the correct part of speech. Please Try again!");
 				e.printStackTrace();
 			}
 		}
