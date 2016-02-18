@@ -22,10 +22,6 @@ public class MadLibJFrame extends JFrame {
 
 	private JPanel buttonPanel;
 	private JPanel topPanel;
-	private JButton one;
-	private JButton two;
-	private JButton three;
-	private JButton four;
 	private JLabel iconLabel;
 	private ImageIcon icon;
 	private JLabel choose;
@@ -34,18 +30,19 @@ public class MadLibJFrame extends JFrame {
 
 	public MadLibJFrame() {
 		setTitle("MadLibs");
-		setSize(700, 600);
+		setSize(550, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
 
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
 		container.setBackground(Color.BLACK);
-		
+
 		Font font = new Font("Type Embellishments One LET", Font.BOLD, 18);
 
 		topPanel = new JPanel();
 		topPanel.setLayout(new BorderLayout());
-		topPanel.setBackground(Color.BLACK);
+		topPanel.setBackground(Color.YELLOW);
 
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BorderLayout());
@@ -53,7 +50,6 @@ public class MadLibJFrame extends JFrame {
 
 		container.add(topPanel, BorderLayout.NORTH);
 		container.add(buttonPanel, BorderLayout.CENTER);
-
 
 		icon = new ImageIcon("./logo.png");
 		iconLabel = new JLabel();
@@ -74,9 +70,8 @@ public class MadLibJFrame extends JFrame {
 
 		submit = new JButton("Submit");
 		buttonPanel.add(submit, BorderLayout.SOUTH);
-		
-		String[] options = { "Advice from Dad", "Interview",
-				"How To Wash Your Face", "Vacation" };
+
+		String[] options = { "Advice from Dad", "Interview", "How To Wash Your Face", "Vacation" };
 
 		box = new JComboBox<String>(options);
 		box.setBackground(Color.BLACK);
@@ -84,9 +79,9 @@ public class MadLibJFrame extends JFrame {
 		box.setFont(font);
 		box.setSelectedIndex(3);
 		box.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-		
+
 		Object child = box.getAccessibleContext().getAccessibleChild(0);
-		BasicComboPopup popup = (BasicComboPopup)child;
+		BasicComboPopup popup = (BasicComboPopup) child;
 		JList list = popup.getList();
 		list.setSelectionBackground(Color.decode("#FF8000"));
 
@@ -97,8 +92,8 @@ public class MadLibJFrame extends JFrame {
 		submit.setFont(font);
 		submit.setHorizontalAlignment(JButton.CENTER);
 		submit.setVerticalAlignment(JButton.CENTER);
-		//submit.setPreferredSize(new Dimension(80,20));
-		
+		// submit.setPreferredSize(new Dimension(80,20));
+
 		submit.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {

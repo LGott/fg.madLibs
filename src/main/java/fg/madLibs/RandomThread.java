@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JTextField;
-import javax.swing.UIManager;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
@@ -29,6 +28,7 @@ public class RandomThread extends Thread {
 		this.texts = fields;
 		this.index = index;
 		this.field = field;
+
 	}
 
 	@Override
@@ -54,7 +54,6 @@ public class RandomThread extends Thread {
 		word = response.getBody().getObject().getJSONObject("results").getJSONArray("data").get(0).toString();
 		System.out.println(word); // For testing purposes
 
-		
 		field.setText(word);
 		field.setEditable(false);
 		field.setEnabled(false);
@@ -62,14 +61,12 @@ public class RandomThread extends Thread {
 		// for (int i = 0; i < texts.size(); i++) {
 
 		texts.set(index, field);
+		// words.add(word);
+		frame.addRandomWords(word, index);
+		// System.out.println(words);
 
-		for (int i = 0; i < texts.size(); i++) {
-			if (texts.get(i).getText().equals("")) {
-				texts.get(i).setText("Cannot Randomize!");
-
-			}
-
-		}
+		
+		
 		
 		frame.addRandomWords(word, index);
 	}
