@@ -16,8 +16,6 @@ import javax.swing.JFrame;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
-//import the sun.audio package
-
 public class PlayGame extends JFrame {
 
 	/**

@@ -49,6 +49,9 @@ public class UIJFrame extends JFrame {
 	private ArrayList<String> filteredWords;
 	private ArrayList<String> textFile;
 	private ArrayList<Integer> index;
+
+	private ArrayList<Integer> userIndex;
+
 	private String fileName;
 	private String image;
 	private JButton randomButton;
@@ -132,6 +135,7 @@ public class UIJFrame extends JFrame {
 		this.index = new ArrayList<Integer>();
 		this.labels = new ArrayList<JLabel>();
 		this.texts = new ArrayList<JTextField>();
+		this.userIndex = new ArrayList<Integer>();
 		this.randomButton = new JButton("Randomize My MadLib!!");
 		this.randomButton.setBackground(Color.decode("#421C52"));
 		this.randomButton.setForeground(Color.decode("#CBFFFA"));
@@ -172,9 +176,22 @@ public class UIJFrame extends JFrame {
 
 				public void focusLost(FocusEvent e) {
 
-					if (!field.getText().equalsIgnoreCase("")) {
-						words.add(field.getText());
+					if (userIndex.size() > 0) {
+						for (int i = 0; i < (userIndex.size() + 1); i++) {
+							if (texts.get(userIndex.get(i)).getText().equals("Enter Word:")) {
+
+								words.set(userIndex.get(i - 1), field.getText());
+								break;
+							}
+						}
 					}
+
+					/*
+					 * if (!field.getText().equalsIgnoreCase("")) {
+					 * words.add(counter, field.getText()); }
+					 */
+
+					System.out.println(words.toString());
 					for (PartsOfSpeech pos : PartsOfSpeech.values()) {
 						if (speech.equalsIgnoreCase(pos.name())) {
 							filtered.add(speech);
@@ -188,7 +205,6 @@ public class UIJFrame extends JFrame {
 			});
 
 		}
-
 		for (JLabel label : labels) {
 			yLabelGroup.addComponent(label);
 		}
@@ -300,20 +316,21 @@ public class UIJFrame extends JFrame {
 			}
 		}
 
-		class DelayDisplay extends TimerTask {
-			@Override
-			public void run() {
+		// class DelayDisplay extends TimerTask {
+		// @Override
+		// public void run() {
 
-				for (int i = 0; i < texts.size(); i++) {
-					if (texts.get(i).isEnabled() == true) {
-						texts.get(i).setText("");
-						words.set(i, texts.get(i).getText());
-						System.out.println(words);
-					}
-				}
-				new Timer().schedule(new DelayDisplay(), 6000);
+		for (int i = 0; i < texts.size(); i++) {
+			final JTextField field = texts.get(i);
+			if (texts.get(i).isEnabled() == true) {
+				texts.get(i).setText("Enter Word:");
+				counter = i;
+
 			}
 		}
+		// new Timer().schedule(new DelayDisplay(), 6000);
+		// }
+		// }
 
 	}
 
@@ -369,13 +386,19 @@ public class UIJFrame extends JFrame {
 					} else {
 						break;
 					}
+
 				}
 			}
 		}
+		for (int i = 0; i < partsOfSpeech.length; i++) {
+			if (!index.contains(i)) {
+				userIndex.add(i);
+			}
+		}
 
-		System.out.println(filtered);
-		System.out.println(filteredWords);
-		System.out.println(index);
+		System.out.println(filtered.toString());
+		System.out.println(filteredWords.toString());
+		System.out.println(userIndex);
 
 	}
 
@@ -391,7 +414,7 @@ public class UIJFrame extends JFrame {
 	}
 
 	public static void main(String[] args) throws IOException {
-		new UIJFrame("How To Wash Your Face.txt", "AdviceFromDadImage.jpeg").setVisible(true);
+		new UIJFrame("Mad Lib Job Interview.txt", "AdviceFromDadImage.jpeg").setVisible(true);
 	}
 
 }
