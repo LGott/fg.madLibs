@@ -61,6 +61,7 @@ public class UIJFrame extends JFrame {
 	private int counter = 0;
 	private JLabel imageLabel;
 	private JButton enterButton;
+	private String title;
 
 	public UIJFrame(String filename, String imageURL) throws IOException {
 
@@ -144,6 +145,7 @@ public class UIJFrame extends JFrame {
 		this.enterButton.setBackground(Color.decode("#421C52"));
 		this.enterButton.setForeground(Color.decode("#CBFFFA"));
 		this.enterButton.setFont(font);
+		this.title = null;
 
 		north.add(label, BorderLayout.CENTER);
 		north.add(imageLabel, BorderLayout.NORTH);
@@ -177,29 +179,37 @@ public class UIJFrame extends JFrame {
 				public void focusLost(FocusEvent e) {
 
 					if (userIndex.size() > 0) {
-						for (int i = 0; i < (userIndex.size() + 1); i++) {
-							if (texts.get(userIndex.get(i)).getText().equals("Enter Word:")) {
+						for (int i = 0; i < (userIndex.size()); i++) {
+							if (texts.get(userIndex.get(i)).getText().equals("Enter Word")) {
 
-								words.set(userIndex.get(i - 1), field.getText());
+								if (!field.getText().equals("Enter Word")) {
+
+									words.set(userIndex.get(i - 1), field.getText());
+
+								}
+
 								break;
 							}
+							words.set(words.size() - 1, texts.get(texts.size() - 1).getText());
 						}
 					}
 
-					/*
-					 * if (!field.getText().equalsIgnoreCase("")) {
-					 * words.add(counter, field.getText()); }
-					 */
-
 					System.out.println(words.toString());
+
 					for (PartsOfSpeech pos : PartsOfSpeech.values()) {
 						if (speech.equalsIgnoreCase(pos.name())) {
 							filtered.add(speech);
 							filteredWords.add(field.getText());
 							index.add(counter);
+							if (counter > partsOfSpeech.length) {
+								if (!field.getText().equalsIgnoreCase("")) {
+									words.add(field.getText());
+								}
+							}
 
 							threadCall(field.getText().toLowerCase(), speech.toLowerCase());
 						}
+
 					}
 				}
 			});
@@ -224,7 +234,7 @@ public class UIJFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				dispose();
-				new DisplayFrame(textFile, words, image).setVisible(true);
+				new DisplayFrame(textFile, words, image, title).setVisible(true);
 			}
 		});
 
@@ -254,7 +264,6 @@ public class UIJFrame extends JFrame {
 					e.printStackTrace();
 				}
 
-				displayRandom();
 				displayRandomText();
 			}
 		});
@@ -274,6 +283,7 @@ public class UIJFrame extends JFrame {
 		this.partsOfSpeech = file.nextLine().split("%");
 		file.reset();
 		String pattern = "[%]*";
+		title = file.nextLine();
 
 		while (!(file.hasNext(pattern)) && file.hasNext()) {
 			String line1 = file.next();
@@ -289,7 +299,8 @@ public class UIJFrame extends JFrame {
 				counter++;
 			}
 		}
-		System.out.println(textFile.toString().replace(",", " ").replace("[", "").replace("]", "").trim());
+		// System.out.println(textFile.toString().replace(",", " ").replace("[",
+		// "").replace("]", "").trim());
 	}
 
 	public void displayRandomText() {
@@ -299,38 +310,29 @@ public class UIJFrame extends JFrame {
 			public void run() {
 				JOptionPane.showMessageDialog(null,
 						"Not all words can be Randomized!\n Please fill in the remaining text boxes :)");
+
+				for (int i = 0; i < texts.size(); i++) {
+					if (texts.get(i).isEnabled() == true) {
+						texts.get(i).setText("Enter Word");
+					}
+				}
+
 			}
 		}
 
-		new Timer().schedule(new DelayTask(), 5200);
+		new Timer().schedule(new DelayTask(), 5000);
 
 		for (int i = 0; i < texts.size(); i++) {
 			texts.get(i).setEnabled(true);
 
 		}
 
-		for (int i = 0; i < texts.size(); i++) {
+		for (int i = 0; i < (texts.size()); i++) {
 			if (texts.get(i).isEnabled() == true) {
 				texts.get(i).setText(" ");
 				words.set(i, texts.get(i).getText());
 			}
 		}
-
-		// class DelayDisplay extends TimerTask {
-		// @Override
-		// public void run() {
-
-		for (int i = 0; i < texts.size(); i++) {
-			final JTextField field = texts.get(i);
-			if (texts.get(i).isEnabled() == true) {
-				texts.get(i).setText("Enter Word:");
-				counter = i;
-
-			}
-		}
-		// new Timer().schedule(new DelayDisplay(), 6000);
-		// }
-		// }
 
 	}
 
@@ -365,7 +367,7 @@ public class UIJFrame extends JFrame {
 				throw new NotEqualsException();
 			} catch (NotEqualsException e) {
 				JOptionPane
-				.showMessageDialog(null, "Word entered is not the correct part of speech. Please Try again!");
+						.showMessageDialog(null, "Word entered is not the correct part of speech. Please Try again!");
 
 				e.printStackTrace();
 			}

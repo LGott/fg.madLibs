@@ -21,7 +21,7 @@ public class DisplayFrame extends JFrame {
 	private ImageIcon icon;
 	private ArrayList<String> words;
 
-	public DisplayFrame(ArrayList<String> file, ArrayList<String> words, String imageURL) {
+	public DisplayFrame(ArrayList<String> file, ArrayList<String> words, String imageURL, String title) {
 
 		this.file = file;
 		this.icon = new ImageIcon(imageURL);
@@ -60,7 +60,7 @@ public class DisplayFrame extends JFrame {
 
 		// g.drawString("Hello", 100,100);
 
-		backgroundArea.setText(fileString);
+		backgroundArea.setText(title + "\n" + fileString);
 		// backgroundArea.setBackground(c);
 		backgroundArea.setForeground(Color.YELLOW);
 		backgroundArea.setFont(font);
@@ -80,7 +80,7 @@ public class DisplayFrame extends JFrame {
 		array.add("how");
 		array.add("are you");
 
-		new DisplayFrame(array, array, "AdviceFromDadImage.jpeg").setVisible(true);
+		new DisplayFrame(array, array, "AdviceFromDadImage.jpeg", "title").setVisible(true);
 	}
 
 }
