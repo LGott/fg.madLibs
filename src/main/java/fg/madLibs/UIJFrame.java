@@ -372,7 +372,7 @@ public class UIJFrame extends JFrame {
 				throw new NotEqualsException();
 			} catch (NotEqualsException e) {
 				JOptionPane
-						.showMessageDialog(null, "Word entered is not the correct part of speech. Please Try again!");
+				.showMessageDialog(null, "Word entered is not the correct part of speech. Please Try again!");
 
 			} catch (NullPointerException e) {
 
@@ -412,9 +412,4 @@ public class UIJFrame extends JFrame {
 		}
 	}
 
-	public static void main(String[] args) throws IOException {
-
-		new UIJFrame("How to Wash Your Face.txt").setVisible(true);
-
-	}
 }

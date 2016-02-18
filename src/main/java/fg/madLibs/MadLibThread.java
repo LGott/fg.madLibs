@@ -1,7 +1,5 @@
 package fg.madLibs;
 
-import java.io.IOException;
-
 import javax.swing.JOptionPane;
 
 import com.mashape.unirest.http.HttpResponse;
@@ -71,8 +69,4 @@ public class MadLibThread extends Thread {
 
 	}
 
-	public static void main(String[] args) throws IOException {
-
-		new MadLibThread("run", "verb", new UIJFrame("How to Wash Your Face.txt")).start();
-	}
 }
