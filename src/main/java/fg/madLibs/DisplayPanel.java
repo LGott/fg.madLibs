@@ -16,7 +16,7 @@ public class DisplayPanel extends JPanel {
 	public DisplayPanel(String imageURL) {
 
 		try {
-			image = ImageIO.read(new File("AdviceFromDadImage.jpeg"));
+			image = ImageIO.read(new File(imageURL));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

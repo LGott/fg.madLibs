@@ -19,6 +19,7 @@ public class PracticeFrame extends JFrame {
 
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
+		container.setBackground(Color.BLUE);
 		
 		JLabel label = new JLabel(new ImageIcon("AdviceFromDadImage.jpeg"));
 		
@@ -26,7 +27,17 @@ public class PracticeFrame extends JFrame {
 		JTextArea area = new JTextArea("Hello");
 		area.setBounds(300,300,300,300);
 		//area.setBackground();
-		add(area);
+		
+		
+
+		StringBuilder builder = new StringBuilder("<html>");
+		builder.append("hello, hello, how are you doing today");
+		builder.append("<html>");
+		
+		label.setText(builder.toString());
+		label.setBounds(400,200,300,400);
+		add(label);
+		//add(area);
 		container.add(label);
 		
 		area.setVisible(true);

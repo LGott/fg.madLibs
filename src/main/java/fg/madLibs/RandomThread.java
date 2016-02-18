@@ -21,7 +21,8 @@ public class RandomThread extends Thread {
 	private int index;
 	private JTextField field;
 
-	public RandomThread(String pos, UIJFrame frame, int index, ArrayList<JTextField> fields, JTextField field) {
+	public RandomThread(String pos, UIJFrame frame, int index,
+			ArrayList<JTextField> fields, JTextField field) {
 
 		this.pos = pos;
 		this.frame = frame;
@@ -43,23 +44,26 @@ public class RandomThread extends Thread {
 		builder.append(num);
 
 		try {
-			response = Unirest.get(builder.toString())
-					.header("X-Mashape-Key", "LsvNmn9sVvmshJNr08Cav83z1Eovp1BNciPjsnA0yzYSlgfJOE")
+			response = Unirest
+					.get(builder.toString())
+					.header("X-Mashape-Key",
+							"LsvNmn9sVvmshJNr08Cav83z1Eovp1BNciPjsnA0yzYSlgfJOE")
 					.header("Accept", "application/json").asJson();
 		} catch (UnirestException e) {
 			e.printStackTrace();
 		}
 
-		word = response.getBody().getObject().getJSONObject("results").getJSONArray("data").get(0).toString();
+		word = response.getBody().getObject().getJSONObject("results")
+				.getJSONArray("data").get(0).toString();
 		System.out.println(word); // For testing purposes
 
 		field.setText(word);
 		field.setEditable(false);
 		field.setEnabled(false);
-		field.setDisabledTextColor(Color.BLACK);
+		field.setDisabledTextColor(Color.GRAY);
 
 		texts.set(index, field);
-
 		frame.addRandomWords(word, index);
+
 	}
 }

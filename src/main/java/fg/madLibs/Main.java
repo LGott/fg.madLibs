@@ -35,7 +35,7 @@ public class Main {
 
 		StringBuilder builder2 = new StringBuilder();
 		builder2.append("https://wordsapiv1.p.mashape.com/words/");
-		builder2.append("late");
+		builder2.append("jumps");
 		builder2.append("/definitions");
 
 		HttpResponse<JsonNode> response2 = null;

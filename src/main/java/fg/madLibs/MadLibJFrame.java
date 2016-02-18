@@ -37,6 +37,7 @@ public class MadLibJFrame extends JFrame {
 		setSize(550, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
+		setResizable(false);
 
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
@@ -75,13 +76,13 @@ public class MadLibJFrame extends JFrame {
 		submit = new JButton("Submit");
 		buttonPanel.add(submit, BorderLayout.SOUTH);
 
-		String[] options = { "Advice from Dad", "Interview", "How To Wash Your Face", "Vacation" };
+		String[] options = { "Advice from Dad", "Interview", "How To Wash Your Face", "Vacation", "A Familiar Story", "Clinton Against Obama" };
 
 		box = new JComboBox<String>(options);
 		box.setBackground(Color.BLACK);
 		box.setForeground((Color.decode("#FF9900")));
 		box.setFont(font);
-		box.setSelectedIndex(3);
+		box.setSelectedIndex(5);
 		box.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
 
 		Object child = box.getAccessibleContext().getAccessibleChild(0);
@@ -118,24 +119,35 @@ public class MadLibJFrame extends JFrame {
 				case 1:
 
 					story = "Mad Lib Job Interview.txt";
-					imageURL = "AdviceFromDadImage.jpeg";
+					imageURL = "MadLib1.png";
 
 					break;
 
 				case 2:
 
 					story = "How To Wash Your Face.txt";
-					imageURL = "AdviceFromDadImage.jpeg";
+					imageURL = "MadLib2.png";
 
 					break;
 
 				case 3:
 
 					story = "Vacation.txt";
-					imageURL = "AdviceFromDadImage.jpeg";
+					imageURL = "MadLib3.png";
 
 					break;
+					
+				case 4: 
+					story = "A Familiar Story.txt";
+					imageURL = "AdviceFromDadImage.jpeg";
 
+				break;
+				
+				case 5: 
+					story = "Clinton Against Obama.txt";
+					imageURL = "AdviceFromDadImage.jpeg";
+						
+					break;
 				}
 
 				try {
@@ -153,3 +165,4 @@ public class MadLibJFrame extends JFrame {
 	}
 
 }
+
