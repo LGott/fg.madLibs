@@ -57,6 +57,7 @@ public class UIJFrame extends JFrame {
 	private RandomThread randomThread;
 	private int counter = 0;
 	private ArrayList<Integer> userIndex;
+	private int placeHolder = 0;
 
 	private JLabel imageLabel;
 	private JButton enterButton;
@@ -64,9 +65,10 @@ public class UIJFrame extends JFrame {
 	public UIJFrame(String filename, String imageURL) throws IOException {
 
 		setTitle("MadLibs");
-		setSize(600, 800);
+		setSize(600, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
+		setResizable(false);
 
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
@@ -172,7 +174,7 @@ public class UIJFrame extends JFrame {
 			field.setBackground(Color.decode("#EC799A"));
 			field.setForeground(Color.decode("#9F0251"));
 			field.setFont(font);
-			field.setPreferredSize(new Dimension(200, 25));
+			field.setPreferredSize(new Dimension(200, 28));
 			field.setEnabled(false);
 			this.texts.add(field);
 			field.addFocusListener(new FocusListener() {
@@ -191,25 +193,29 @@ public class UIJFrame extends JFrame {
 								if (!field.getText().equals("Enter Word:")) {
 									words.set(userIndex.get(i - 1),
 											field.getText());
+									System.out.println(words.toString());
 								}
 								break;
 							}
 						}
 					}
 
-					if (!field.getText().equalsIgnoreCase("")) {
-						words.add(field.getText());
-					}
+					if (placeHolder <= filtered.size()) {
+						if (!field.getText().equalsIgnoreCase("")) {
+							words.add(field.getText());
+						}
 
-					System.out.println(words.toString());
-					for (PartsOfSpeech pos : PartsOfSpeech.values()) {
-						if (speech.equalsIgnoreCase(pos.name())) {
-							filtered.add(speech);
-							filteredWords.add(field.getText());
-							index.add(counter);
+						System.out.println(words.toString());
+						for (PartsOfSpeech pos : PartsOfSpeech.values()) {
+							if (speech.equalsIgnoreCase(pos.name())) {
+								filtered.add(speech);
+								placeHolder++;
+								filteredWords.add(field.getText());
+								index.add(counter);
 
-							threadCall(field.getText().toLowerCase(),
-									speech.toLowerCase());
+								threadCall(field.getText().toLowerCase(),
+										speech.toLowerCase());
+							}
 						}
 					}
 				}
@@ -331,13 +337,13 @@ public class UIJFrame extends JFrame {
 
 			final JTextField field = texts.get(i);
 			field.setEnabled(true);
+			placeHolder = 100; // set a high number
 
 		}
 
 		for (int i = 0; i < texts.size(); i++) {
 			if (texts.get(i).isEnabled() == true) {
 				texts.get(i).setText("Enter Word:");
-				counter = i;
 
 			}
 		}
@@ -378,10 +384,10 @@ public class UIJFrame extends JFrame {
 
 						.showMessageDialog(null,
 								"Word entered is not the correct part of speech. Please Try again!");
-			} catch (NullPointerException e){
+			} catch (NullPointerException e) {
 				JOptionPane
-				.showMessageDialog(null,
-						"Word entered is not the correct part of speech. Please Try again!");
+						.showMessageDialog(null,
+								"Word entered is not the correct part of speech. Please Try again!");
 
 			}
 		}

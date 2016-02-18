@@ -32,6 +32,7 @@ public class PlayGame extends JFrame {
 		setSize(550, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
+		setResizable(false);
 
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());

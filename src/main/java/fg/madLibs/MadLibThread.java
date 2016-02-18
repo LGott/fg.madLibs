@@ -2,6 +2,8 @@ package fg.madLibs;
 
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
@@ -40,9 +42,13 @@ public class MadLibThread extends Thread {
 		} catch (UnirestException e) {
 			e.printStackTrace();
 		}
-
-		int size = response.getBody().getArray().getJSONObject(0)
+		int size = 0;
+		try{
+		size = response.getBody().getArray().getJSONObject(0)
 				.getJSONArray("definitions").length();
+		} catch(NullPointerException e){
+			
+		}
 
 		boolean found = false;
 
