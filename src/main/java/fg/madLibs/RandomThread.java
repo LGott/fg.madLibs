@@ -28,7 +28,6 @@ public class RandomThread extends Thread {
 		this.texts = fields;
 		this.index = index;
 		this.field = field;
-
 	}
 
 	@Override
@@ -46,7 +45,7 @@ public class RandomThread extends Thread {
 		try {
 			response = Unirest.get(builder.toString())
 					.header("X-Mashape-Key", "LsvNmn9sVvmshJNr08Cav83z1Eovp1BNciPjsnA0yzYSlgfJOE")
-							.header("Accept", "application/json").asJson();
+					.header("Accept", "application/json").asJson();
 		} catch (UnirestException e) {
 			e.printStackTrace();
 		}
@@ -57,14 +56,9 @@ public class RandomThread extends Thread {
 		field.setText(word);
 		field.setEditable(false);
 		field.setEnabled(false);
-		field.setDisabledTextColor(Color.GRAY);
-		// for (int i = 0; i < texts.size(); i++) {
+		field.setDisabledTextColor(Color.BLACK);
 
 		texts.set(index, field);
-		// words.add(word);
-		frame.addRandomWords(word, index);
-
-		// System.out.println(words);
 
 		frame.addRandomWords(word, index);
 	}

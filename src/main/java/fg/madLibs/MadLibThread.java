@@ -33,7 +33,7 @@ public class MadLibThread extends Thread {
 		try {
 			response = Unirest.get(builder.toString())
 					.header("X-Mashape-Key", "LsvNmn9sVvmshJNr08Cav83z1Eovp1BNciPjsnA0yzYSlgfJOE")
-							.header("Accept", "application/json").asJson();
+					.header("Accept", "application/json").asJson();
 
 		} catch (UnirestException e) {
 			e.printStackTrace();
@@ -46,10 +46,10 @@ public class MadLibThread extends Thread {
 		for (int i = 0; i < size; i++) {
 			stringResponse = response.getBody().getArray().getJSONObject(0).getJSONArray("definitions")
 					.getJSONObject(i).getString("partOfSpeech");
+
 			if (stringResponse.equalsIgnoreCase(partOfSpeech)) {
 				found = true;
 				break;
-
 			}
 		}
 
@@ -58,12 +58,10 @@ public class MadLibThread extends Thread {
 		} catch (NotEqualsException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public static void main(String[] args) throws IOException {
 
 		new MadLibThread("run", "verb", new UIJFrame("How to Wash Your Face.txt", "madLibAdviceFromDad.jpeg")).start();
-
 	}
 }
