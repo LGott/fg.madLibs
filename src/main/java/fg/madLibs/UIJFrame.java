@@ -15,6 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -145,8 +147,7 @@ public class UIJFrame extends JFrame {
 		this.randomButton.setBackground(Color.decode("#177F75"));
 		this.randomButton.setForeground(Color.decode("#CBFFFA"));
 		this.randomButton.setFont(font);
-
-		this.enterButton = new JButton("Enter info myself!!");
+		this.enterButton = new JButton("Enter Info Myself!!");
 		this.enterButton.setBackground(Color.decode("#177F75"));
 		this.enterButton.setForeground(Color.decode("#CBFFFA"));
 		this.enterButton.setFont(font);
@@ -247,10 +248,16 @@ public class UIJFrame extends JFrame {
 				filterArray();
 
 				try {
+
 					randomThreadCall();
+
+					// Thread.sleep(1000);
 					displayRandom();
 				} catch (IOException e1) {
 					e1.printStackTrace();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 
 				// displayRandom();
@@ -259,6 +266,7 @@ public class UIJFrame extends JFrame {
 				// System.out.println(randomWords);
 
 				displayRandom();
+				displayRandomText();
 				// displayText();
 
 			}
@@ -295,13 +303,41 @@ public class UIJFrame extends JFrame {
 
 	public void displayRandomText() {
 
+		// for (int i = 0; i < texts.size(); i++) {
+		// if (texts.get(i).getText().equals("")) {
+		// texts.get(i).setText("Cannot Randomize!");
+
+		// }
+
+		// }
+		class DelayTask extends TimerTask {
+			@Override
+			public void run() {
+				JOptionPane.showMessageDialog(null,
+						"Not all words can be Randomized!\n Please fill in the remaining text boxes :)");
+			}
+		}
+
+		new Timer().schedule(new DelayTask(), 5200);
+
 		for (int i = 0; i < texts.size(); i++) {
 			texts.get(i).setEnabled(true);
 		}
-		for (int i = 0; i < texts.size(); i++) {
-			if (texts.get(i).getText().equals("Cannot Randomize")) {
 
-				words.set(i, "hello");
+		class DelayDisplay extends TimerTask {
+			@Override
+			public void run() {
+
+				for (int i = 0; i < texts.size(); i++) {
+					if (texts.get(i).isEnabled() == true) {
+						// texts.get(i).setText("");
+						words.add(i, texts.get(i).getText());
+
+					}
+				}
+				// }
+
+				new Timer().schedule(new DelayDisplay(), 5200);
 			}
 		}
 		System.out.println(words);
@@ -311,7 +347,7 @@ public class UIJFrame extends JFrame {
 
 		words.set(index, word);
 		System.out.println(words.toString());
-		displayRandomText();
+
 	}
 
 	public void threadCall(String word, String partOfSpeech) {
@@ -321,7 +357,7 @@ public class UIJFrame extends JFrame {
 
 	}
 
-	public void randomThreadCall() throws IOException {
+	public void randomThreadCall() throws IOException, InterruptedException {
 
 		for (int i = 0; i < filtered.size(); i++) {
 

@@ -34,7 +34,7 @@ public class MadLibJFrame extends JFrame {
 
 	public MadLibJFrame() {
 		setTitle("MadLibs");
-		setSize(700, 600);
+		setSize(550, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 
@@ -46,7 +46,7 @@ public class MadLibJFrame extends JFrame {
 
 		topPanel = new JPanel();
 		topPanel.setLayout(new BorderLayout());
-		topPanel.setBackground(Color.BLACK);
+		topPanel.setBackground(Color.YELLOW);
 
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BorderLayout());

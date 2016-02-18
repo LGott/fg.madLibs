@@ -25,7 +25,7 @@ public class PlayGame extends JFrame {
 	public PlayGame() throws IOException {
 
 		setTitle("MadLibs");
-		setSize(700, 600);
+		setSize(550, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 
