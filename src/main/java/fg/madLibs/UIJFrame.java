@@ -203,13 +203,12 @@ public class UIJFrame extends JFrame {
 					if (placeHolder <= filtered.size()) {
 						if (!field.getText().equalsIgnoreCase("")) {
 							words.add(field.getText());
-							// field.setEnabled(false);
 						}
 
 						for (PartsOfSpeech pos : PartsOfSpeech.values()) {
 							if (speech.equalsIgnoreCase(pos.name())) {
 								filtered.add(speech);
-								placeHolder++;
+								// placeHolder++;
 								filteredWords.add(field.getText());
 								index.add(counter);
 
@@ -276,7 +275,6 @@ public class UIJFrame extends JFrame {
 				}
 
 				displayRandomText();
-				// displayText();
 
 			}
 		});
@@ -303,17 +301,6 @@ public class UIJFrame extends JFrame {
 			textFile.add(line1);
 		}
 		file.close();
-	}
-
-	public void displayText() {
-		int counter = 0;
-		for (int i = 0; i < textFile.size(); i++) {
-			if (textFile.get(i).equals(";")) {
-				textFile.set(i, words.get(counter));
-				counter++;
-			}
-		}
-
 	}
 
 	public void displayRandomText() {
@@ -376,7 +363,7 @@ public class UIJFrame extends JFrame {
 				throw new NotEqualsException();
 			} catch (NotEqualsException e) {
 				JOptionPane
-				.showMessageDialog(null, "Word entered is not the correct part of speech. Please Try again!");
+						.showMessageDialog(null, "Word entered is not the correct part of speech. Please Try again!");
 
 			} catch (NullPointerException e) {
 
