@@ -192,6 +192,7 @@ public class UIJFrame extends JFrame {
 								if (!field.getText().equals("Enter Word")) {
 
 									words.set(userIndex.get(i - 1), field.getText());
+									System.out.println(words);
 								}
 								break;
 							}
@@ -202,6 +203,7 @@ public class UIJFrame extends JFrame {
 					if (placeHolder <= filtered.size()) {
 						if (!field.getText().equalsIgnoreCase("")) {
 							words.add(field.getText());
+							// field.setEnabled(false);
 						}
 
 						for (PartsOfSpeech pos : PartsOfSpeech.values()) {
@@ -212,6 +214,7 @@ public class UIJFrame extends JFrame {
 								index.add(counter);
 
 								threadCall(field.getText().toLowerCase(), speech.toLowerCase());
+
 							}
 						}
 					}
@@ -273,6 +276,7 @@ public class UIJFrame extends JFrame {
 				}
 
 				displayRandomText();
+				// displayText();
 
 			}
 		});
